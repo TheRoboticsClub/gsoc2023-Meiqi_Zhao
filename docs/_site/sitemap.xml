@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:5000/al-folio/blog/2023/tempalte/</loc>
+<lastmod>2023-05-19T15:08:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/about/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/news/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/roadmap/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/blog/tag/sample-tag/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/blog/category/sample-posts/</loc>
+</url>
+<url>
+<loc>http://localhost:5000/al-folio/blog/2023/</loc>
+</url>
+</urlset>
