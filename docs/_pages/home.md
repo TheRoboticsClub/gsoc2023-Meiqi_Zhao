@@ -19,7 +19,7 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false  # includes social icons at the bottom of the page
 ---
 <!-- ![Project Logo 1](/al-folio/assets/img/logo.png) -->
-<img src="/al-folio/assets/img/logo.png" alt="Project Logo 1" width="200"/><img src="/al-folio/assets/img/GSoC-Horizontal.png" alt="Project Logo 2" width="400"/>
+<img src="/gsoc2023-Meiqi_Zhao/assets/img/logo.png" alt="Project Logo 1" width="200"/><img src="/gsoc2023-Meiqi_Zhao/assets/img/GSoC-Horizontal.png" alt="Project Logo 2" width="400"/>
 <!-- ![Project Logo 2](/img/logo2.png) -->
 
 Hello! My name is Meiqi "Qi" Zhao. This website is a showcase of my work for the [Google Summer of Code (GSoC) 2023](https://summerofcode.withgoogle.com/) with [JdeRobot](https://jderobot.github.io/). I'm incredibly thrilled to be a part of this program, where I'll be making meaningful contributions to [Behavior Metrics](https://jderobot.github.io/BehaviorMetrics/) by JdeRobot, an open-source autonomous driving network comparison tool.
