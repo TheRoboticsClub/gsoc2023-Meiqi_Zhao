@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: http://localhost:5000/gsoc2023-Meiqi_Zhao/sitemap.xml
