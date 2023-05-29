@@ -1,5 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-05-22T12:38:24+00:00</updated><id>https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Community Bonding: May 15 ~ May 21</title><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/" rel="alternate" type="text/html" title="Community Bonding: May 15 ~ May 21" /><published>2023-05-20T11:05:00+00:00</published><updated>2023-05-20T11:05:00+00:00</updated><id>https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community%20bonding%20week%201</id><content type="html" xml:base="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/"><![CDATA[<p>I’m thrilled to be part of Google Summer of Code 2023! This week marks the official start of the community bonding period at JdeRobot, and I couldn’t be more excited. My project, “Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models”, promises to be a fascinating, research-oriented endeavor, which will see me dive deep into the fields of imitation learning and autonomous driving. Let’s get started!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-05-29T08:14:17+00:00</updated><id>https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Community Bonding: May 22 ~ May 28</title><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/" rel="alternate" type="text/html" title="Community Bonding: May 22 ~ May 28" /><published>2023-05-28T12:00:00+00:00</published><updated>2023-05-28T12:00:00+00:00</updated><id>https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community%20bonding%20week%202</id><content type="html" xml:base="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/"><![CDATA[<p>This week marked an intense dive into literature and codebases to unravel the mechanisms and best practices of data collection. In Monday’s meeting, we went over our findings from last week’s literature review on state-of-the-art imitation learning algorithms for autonomous driving and set goals for this week. The focus was to comprehend and dissect the data collection methodologies utilized in various research papers.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Detailed analysis of various research papers with a focus on their data collection methods.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />(Partially Completed) Explore the corresponding codebases to gain a practical understanding of the implementation.</li>
+</ul>
+
+<h2 id="findings">Findings</h2>
+<p>This week, I revisited the work done by Codevilla et al.[1], Hesham et al.[2], Chen et al.[3] and went over their codebases to understand how data collection was implemented.</p>
+
+<h3 id="overall">Overall</h3>
+<ul>
+  <li><strong>Expert demonstration</strong>: Many works leverage CARLA’s built-in autopilot function to gather expert demonstrations for imitation learning. However, it is also possible to use a human driver’s input for a more realistic demonstration.</li>
+  <li><strong>Simulation environment</strong>: Usually in CARLA simulator, Town01 is used for training and Town02 is reserved for testing.</li>
+  <li><strong>Format</strong>: In our case, each episode should consist of a sequence of tuples of (RGB image, semantic segmentation, measurements, control commands)</li>
+  <li><strong>Data variability</strong>: To improve the robustness of the learned policy, the data collected should cover various driving conditions including different weather conditions, traffic densities, and times of the day.</li>
+  <li><strong>Data Augmentation</strong>: This technique enriches the training set by simulating ‘imperfect’ scenarios and applying random transformations to each image during training, enhancing the model’s ability to handle diverse situations.</li>
+  <li><strong>Action Space</strong>: Depending on the work, it can include the steering angle, the acceleration, the braking amount, or even high-level commands like ‘turn left’, ‘turn right’, ‘go straight’, etc.
+    <ul>
+      <li><strong>Route Planning</strong>: If high-level commands are used to determine the direction of the vehicle at intersections, a navigator/planner could be used to derive the current high-level command for each frame. However, in our case, we would want to start small with routes that doesn’t contain intersections.</li>
+    </ul>
+  </li>
+  <li><strong>Episode Duration</strong>: Each episode should be long enough to contain meaningful driving behaviour but short enough to fit into the memory. It is common to set a maximum number of frames (e.g. 5,000) per episode.</li>
+</ul>
+
+<h3 id="data-augmentation">Data Augmentation</h3>
+<p>In my literature review, I found that many papers, including the two other papers listed, adopted the data augmentation practices introduced by Codevilla et al. These practices focus on two main aspects:</p>
+
+<ul>
+  <li>
+    <p>Addressing the lack of ‘imperfect’ scenarios in the training data: As the training data typically lacks demonstrations of the agent recovering from non-ideal situations, it’s necessary to augment the data with such instances. This can be achieved by injecting temporally correlated noise into the expert’s driving commands during data collection. This simulates gradual deviation from the correct path and abrupt disturbances. However, only the expert driver’s actual control commands are used in the training data.</p>
+  </li>
+  <li>
+    <p>Applying random transformations to each image during training: These transformations include adjusting the image’s contrast and brightness, adding Gaussian and salt-and-pepper noise, and introducing region dropout by masking a small section of the image black.</p>
+  </li>
+</ul>
+
+<p>Note that some transformations such as tranlation or ratation should not be applied, as the control commands are not invariant of these transformations.</p>
+
+<h3 id="data-storage">Data Storage</h3>
+<p>Below are a few commonly-used data storage paradigms:</p>
+<ul>
+  <li><strong>Images &amp; json files</strong>: RGB and semantic segmentation images can be stored as standard image files. JSON files can hold associated metadata for each frame such as well as the control commands and measurements. This format is human-readable and easily manipulated but may be slower to read/write in large quantities.</li>
+  <li><strong>Pickle</strong>: This is a Python-specific binary serialization format. Objects can be directly serialized and deserialized to and from byte streams, which makes storing complex objects convenient. However, it may not be suitable for very large datasets due to memory constraints.</li>
+  <li><strong>LMDB</strong>: This is a fast, memory-efficient database library. It can be used to store large amounts of data without loading the entire database into memory. This can greatly accelerate data retrieval and is especially useful for larger datasets.</li>
+</ul>
+
+<h3 id="useful-tools">Useful Tools</h3>
+<p>There are some existing tools that can be mofidied to suit our needs or used as reference:</p>
+<ul>
+  <li><strong>Carla Data Collector</strong>(version 0.8.4): This tool allows the user to configure a dataset configuration file that contains a set of start/target positions, sensor settings, traffic settings etc. to generate a set of eepisodes from an expert demonstrator.</li>
+  <li><strong>Carla Driving Benchmark</strong>(version 0.8.4): This library provides a planner that uses a graph based approach and A* algorithm to find a path from the start location to the target location. It convieniently allows querying the high-level command at the current position.</li>
+</ul>
+
+<h3 id="next-steps">Next Steps</h3>
+<p>The plan is to incrementally increase the complexity of the scenarios from which we collect data. This approach ensures the fundamentals are in place before we dive into more advanced setups. Here’s an outline:</p>
+
+<ul>
+  <li>
+    <p><strong>Non-Intersection Lane Following with a Stationary Obstacle</strong>: Begin with the simplest case: collect data where the agent doesn’t encounter any intersections and only needs to follow the current lane, with one parked vehicle on its path. This will give us a feel for the data collection process, and help us understand the interaction between the agent and static objects in the environment.</p>
+  </li>
+  <li>
+    <p><strong>Non-Intersection Lane Following with Dynamic Traffic</strong>: Once we are comfortable with the basic data collection process, add more complexity by including moving cars on the map. This will give us a deeper understanding of how to handle dynamic objects in the environment.</p>
+  </li>
+  <li>
+    <p><strong>Right Turn Only at Intersections</strong>: With a solid understanding of data collection in simple non-intersection scenarios, we can then proceed to collect episodes where the agent only needs to turn right at intersections to arrive at the target location. This will bring into play the complexities of intersection navigation and multi-lane traffic.</p>
+  </li>
+  <li>
+    <p><strong>Conditional Imitation Learning</strong>: Finally, we can try to collect data in a way that matches the Conditional Imitation Learning paper, i.e., also record high-level commands like TURN_LEFT, TURN_RIGHT, GO_STRAIGHT, FOLLOW, etc. This will complete our imitation learning data collection procedure and lay a solid foundation for our following training and evaluation stages.</p>
+  </li>
+</ul>
+
+<h2 id="references">References</h2>
+<p>[1] Codevilla, Felipe et al. “End-to-End Driving Via Conditional Imitation Learning.” 2018 IEEE International Conference on Robotics and Automation (ICRA) (2017): 1-9.</p>
+
+<p>[2] Hesham M. Eraqi, Mohamed N. Moustafa, Jens Honer. Dynamic Conditional Imitation Learning for Autonomous Driving. IEEE Transactions on Intelligent Transportation Systems (ISSN: 1524-9050, Online ISSN: 1558-0016). Issue 12, Vol 23, Pages 22988-23001. DOI: 10.1109/TITS.2022.3214079, December 2022. [Impact Factor: 9.551]</p>
+
+<p>[3] Chen, Dian et al. “Learning by Cheating.” Conference on Robot Learning (CoRL). 2019.</p>
+
+<p>[4] Carla Data Collector: https://github.com/carla-simulator/data-collector/tree/master</p>
+
+<p>[5] Carla Driving Benchmark: https://github.com/carla-simulator/driving-benchmarks/tree/master</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="DataCollection" /><category term="CARLA" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[second week of the community bonding period; research data collection methods]]></summary></entry><entry><title type="html">Community Bonding: May 15 ~ May 21</title><link href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/" rel="alternate" type="text/html" title="Community Bonding: May 15 ~ May 21" /><published>2023-05-20T11:05:00+00:00</published><updated>2023-05-20T11:05:00+00:00</updated><id>https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community%20bonding%20week%201</id><content type="html" xml:base="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/"><![CDATA[<p>I’m thrilled to be part of Google Summer of Code 2023! This week marks the official start of the community bonding period at JdeRobot, and I couldn’t be more excited. My project, “Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models”, promises to be a fascinating, research-oriented endeavor, which will see me dive deep into the fields of imitation learning and autonomous driving. Let’s get started!</p>
 
 <p>This week we held our first official meeting, where we introduced ourselves, and the mentors went over the program’s logistics. We also laid out the goals for the week, which are listed below.</p>
 
@@ -27,4 +109,4 @@
 <h2 id="references">References</h2>
 <p>[1] Brady Zhou, et al. “Does computer vision matter for action?”. CoRR abs/1905.12887. (2019).</p>
 
-<p>[2] Hesham M. Eraqi, et al. “Dynamic Conditional Imitation Learning for Autonomous Driving”. IEEE Transactions on Intelligent Transportation Systems 23. 12(2022): 22988–23001.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureSearch" /><category term="JdeRobot" /><category term="BehaviorMetrics" /><category term="GSoC" /><category term="ImitationLearning" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[first week of the community bonding period; literature search on imitation learning and autonomous driving]]></summary></entry></feed>
+<p>[2] Hesham M. Eraqi, et al. “Dynamic Conditional Imitation Learning for Autonomous Driving”. IEEE Transactions on Intelligent Transportation Systems 23. 12(2022): 22988–23001.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="JdeRobot" /><category term="BehaviorMetrics" /><category term="GSoC" /><category term="ImitationLearning" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[first week of the community bonding period; literature search on imitation learning and autonomous driving]]></summary></entry></feed>
