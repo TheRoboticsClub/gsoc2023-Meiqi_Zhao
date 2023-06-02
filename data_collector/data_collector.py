@@ -4,15 +4,28 @@ import logging
 import carla
 from traffic_utils import spawn_vehicles, spawn_pedestrians
 from agents.navigation.behavior_agent import BehaviorAgent
-from sensors_utils import setup_rgb_camera, setup_semseg_camera
+from sensors import RGBCamera, SegmentationCamera, setup_collision_sensor
+from utils import vehicle_control_to_dict, carla_seg_to_array, carla_rgb_to_array
 import time
 import numpy as np
+import pickle
+
+has_collision = False
+
+def save_data(filename, data):
+    with open(filename, 'wb') as f:
+        pickle.dump(data, f)
 
 def read_start_end_points(filename):
     with open(filename, 'r') as f:
         lines = f.readlines()
     points = [(int(line.split()[0]), int(line.split()[1])) for line in lines]
     return points
+
+def collision_callback(data):
+    global has_collision
+    has_collision = True
+    print('Collision detected!')
 
 def main(params):
     episode_configs = read_start_end_points(params.episode_file)
@@ -42,10 +55,14 @@ def main(params):
     traffic_manager.set_hybrid_physics_mode(True)
     traffic_manager.set_hybrid_physics_radius(70.0)
 
+    episode_cnt = 0
+    while episode_cnt < params.n_episodes:
+        print(f"episode {episode_cnt}")
 
-    for i in range(params.n_episodes):
-        print(f"episode {i}")
-
+        # reset collision checker
+        global has_collision
+        has_collision = False
+        
         # Get the specific spawn points
         spawn_points = map.get_spawn_points()
         episode_config = random.choice(episode_configs)
@@ -86,7 +103,7 @@ def main(params):
         print('spawned %d vehicles and %d walkers.' % (len(vehicles_list), len(pedestrians_list)))
 
         # create and setup agent
-        agent = BehaviorAgent(vehicle, behavior='custom')
+        agent = BehaviorAgent(vehicle, behavior='normal')
         agent.ignore_vehicles(False)
         agent.ignore_traffic_lights(False)
         agent.follow_speed_limits(False)
@@ -95,18 +112,25 @@ def main(params):
 
         sensors = []
         # setup rgb camera
-        rgb_cam = setup_rgb_camera(world, vehicle)
-        sensors.append(rgb_cam)
+        rgb_cam = RGBCamera(world, vehicle)
+        rgb_cam_sensor = rgb_cam.get_sensor()
+        sensors.append(rgb_cam_sensor)
 
         # setup semantic segmentation camera
-        seg_cam = setup_semseg_camera(world, vehicle)
-        sensors.append(seg_cam)
+        seg_cam = SegmentationCamera(world, vehicle)
+        seg_cam_sensor = seg_cam.get_sensor()
+        sensors.append(seg_cam_sensor)
 
+        collision_sensor = setup_collision_sensor(world, vehicle)
+        collision_sensor.listen(collision_callback)
+        sensors.append(collision_sensor)
+        world.tick()
     
         frame = 0
+        episode_data = []
         while True:
             # Check if agent is done
-            if agent.done():
+            if agent.done() or frame >= params.max_frames_per_episode or has_collision:
 
                 print("The target has been reached, episode ending")
                 vehicle.destroy()
@@ -122,27 +146,44 @@ def main(params):
                 print('\ndestroying %d walkers' % len(pedestrians_list))
                 client.apply_batch([carla.command.DestroyActor(x) for x in all_id])
                 world.tick()
-                #client.disconnect()
+
                 break
-            
+
             world.tick()
 
             # Apply control commands
             control = agent.run_step()
             vehicle.apply_control(control)
+            velocity = vehicle.get_velocity()
+            speed = (3.6 * np.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2))
 
             # Update spectator's location to match the vehicle's
             vehicle_location = vehicle.get_transform().location
             spectator.set_transform(carla.Transform(vehicle_location + carla.Location(z=50), carla.Rotation(pitch=-90)))
 
-            # Save controls and measurements
-            print(f'{frame} throttle: {control.throttle}, brake: {control.brake}, steer: {control.steer}')
-            velocity = vehicle.get_velocity()
-            speed = (3.6 * np.sqrt(velocity.x**2 + velocity.y**2 + velocity.z**2))
-            print(f'{frame} speed: {speed}')
+            # save frame data
+            frame_data = {
+                'frame': frame,
+                'controls': vehicle_control_to_dict(control),
+                'measurements': speed,
+                'rgb': carla_rgb_to_array(rgb_cam.get_sensor_data()),
+                'segmentation': carla_seg_to_array(seg_cam.get_sensor_data())
+            }
+            episode_data.append(frame_data)
+
+            # print(f'{frame} throttle: {control.throttle}, brake: {control.brake}, steer: {control.steer}')
+            # print(f'{frame} speed: {speed}')
 
             # Next frame
             frame += 1
+        
+        if not has_collision:
+            # save data
+            save_data(f'data/episode_{episode_cnt}.pkl', episode_data)
+
+            episode_cnt += 1
+        
+        #TODO: save data in pickle format
 
 
     
