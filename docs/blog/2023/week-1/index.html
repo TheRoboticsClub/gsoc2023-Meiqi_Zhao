@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/gsoc2023-Meiqi_Zhao/assets/css/main.css">
-    <link rel="canonical" href="https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/blog/2023/week-1/">
+    <link rel="canonical" href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/">
 
     <!-- Dark Mode -->
     
@@ -161,17 +161,66 @@ In addition, we decided the implementation of the data collection tool should be
 <h2 id="objectives">Objectives</h2>
 <ul class="task-list">
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled>Get started with the data collection tool and collect some sample data</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Get started with the data collection tool and collect some sample data</li>
   <li class="task-list-item">
 <input type="checkbox" class="task-list-item-checkbox" disabled>Delve into the simulator to understand how to configure sensors, extract data, and spawn pedestrians crossing roads</li>
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled>Check out Deep Learning Studio[1] and review existing models</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Check out Deep Learning Studio[1] and review existing models</li>
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled>Train a small model on simplest scenarios if time permits</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Train a small model on simplest scenarios if time permits</li>
 </ul>
 
 <h2 id="execution">Execution</h2>
-<p>TBA</p>
+
+<h3 id="data-collection-tool">Data Collection Tool</h3>
+
+<p>The first step of the execution was implementing a data collection tool. This tool randomly samples straight routes with no intersections from a list of start and target locations provided in a .txt file. For each episode, the program reloads the traffic, spawns the ego-vehicle at the start location, and utilizes CARLA’s <a href="https://carla.readthedocs.io/en/0.9.12/adv_agents/" rel="external nofollow noopener" target="_blank">BehaviorAgent</a> to drive it to the target location. For each frame, the RGB camera image, semantic segmentation, current speed measurement, and the controls (throttle, steer, brake) are recorded and saved in .pkl format.</p>
+
+<p>For sample data I collected 100 episodes, totalling ~32000 frames.</p>
+
+<h3 id="model">Model</h3>
+<p>Simultaneously, I explored the Deep Learning Studio[1] and reviewed several existing models. From this exploration, I modified the DeepestLSTMTinyPilotNet to accept a 4D image input (RGB+Segmentation) and concatenate the flattened features with the current speed measurement. The output of the model is a vector of (throttle, steer, brake).</p>
+
+<p>Below is the architecture of the modified DeepestLSTMTinyPilotNet:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DeepestLSTMTinyPilotNet(
+  (cn_1): Conv2d(4, 8, kernel_size=(3, 3), stride=(2, 2))
+  (relu_1): ReLU()
+  (cn_2): Conv2d(8, 8, kernel_size=(3, 3), stride=(2, 2))
+  (relu_2): ReLU()
+  (cn_3): Conv2d(8, 8, kernel_size=(3, 3), stride=(2, 2))
+  (relu_3): ReLU()
+  (dropout_1): Dropout(p=0.2, inplace=False)
+  (clstm_n): ConvLSTM(
+    (cell_list): ModuleList(
+      (0): ConvLSTMCell(
+        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+      )
+      (1): ConvLSTMCell(
+        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+      )
+      (2): ConvLSTMCell(
+        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+      )
+    )
+  )
+  (fc_1): Linear(in_features=6721, out_features=50, bias=True)
+  (relu_fc_1): ReLU()
+  (fc_2): Linear(in_features=50, out_features=10, bias=True)
+  (relu_fc_2): ReLU()
+  (fc_3): Linear(in_features=10, out_features=3, bias=True)
+)
+</code></pre></div></div>
+<p>The figure below shows the training and validation loss over 100 epochs.</p>
+
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/DeepestLSTMTinyPilotNet_100epochs_loss.png" width="500"></center>
+
+<h3 id="results">Results</h3>
+<p>I evaluated the performance of the model by deploying it in the CARLA simulator and observing its behavior. As shown in the video below, there are several problems: (1) the vehicle is hitting brake even when there is not obstacle in front of it (2) the vehicle steers to the left instead of driving a straight trajectory</p>
+
+<video width="800" controls="">
+  <source src="/gsoc2023-Meiqi_Zhao/assets/video/DeepestLSTMTinyPilotNetwork_100eopchs.mp4" type="video/mp4"></source>
+</video>
 
 <h2 id="references">References</h2>
 <p>[1] Deep Learning Studio: https://github.com/JdeRobot/DeepLearningStudio</p>
@@ -193,13 +242,19 @@ In addition, we decided the implementation of the data collection tool should be
   
 
   <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/">Community Bonding: May 15 ~ May 21</a>
+  </li>
+
+  
+
+  <li class="my-2">
     <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/">Community Bonding: May 22 ~ May 28</a>
   </li>
 
   
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/">Community Bonding: May 15 ~ May 21</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week-1/">Week 1: May 29 ~ June 04</a>
   </li>
 
 </div>
