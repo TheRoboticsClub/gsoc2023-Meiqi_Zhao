@@ -1,5 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-05T09:18:43-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 1: May 29 ~ June 04</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/" rel="alternate" type="text/html" title="Week 1: May 29 ~ June 04" /><published>2023-05-29T13:17:00-04:00</published><updated>2023-05-29T13:17:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week%201</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-12T08:43:09-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Week 2: June 5 ~ June 11</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/" rel="alternate" type="text/html" title="Week 2: June 5 ~ June 11" /><published>2023-06-12T04:04:00-04:00</published><updated>2023-06-12T04:04:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>During Monday’s meeting, we discussed last week’s progress on developing the data collection tool and our initial analysis of the model, which was trained on the preliminary dataset. Nikhil highlighted an issue in my approach that I was using an array of semantic labels as the 4th channel to augment the RGB image data from the camera. He suggested a more effective method would be to transform these labels into RGB values, treating them in the same manner as the camera image for better feature learning.</p>
+
+<p>Data augmentation was another important aspect of imitation learning. Our last week’s model faced a challenge in self-correction: it would swiftly leave the lane if it deviated from the center, primarily because it was never exposed to situations where the expert demonstrates steering back from a drift. To improve this, we considered augmenting our dataset to include scenarios simulating recovery from disturbances. One potential solution involves applying an affine transformation to slightly shift the images left or right and adjust the steering values accordingly. This technique would expose the agent to scenarios where images are offset to one side and the steering angle is towards the opposite direction, thus teaching it how to auto-correct if it strays from the center of the lane.</p>
+
+<p>An alternative strategy involves the injection of temporally-correlated noise into the expert agent’s driving control commands. For instance, noise that prompts the car to drift to the left could be incorporated into the steering commands by the agent. While this combined signal is used for vehicle control, only the expert agent’s counteractive response to the drift-induced noise is recorded as a part of the dataset.</p>
+
+<p>Given time constraints, I could only experiment with the latter approach this week. But the good news is, it proved to be quite effective! For more details, refer to the Execution section.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Convert semantic segmentation from labels to RGB images</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Plot out predictions vs ground truth for model evaluation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Perform data augmentation by applying custom transformations (Did noise injection instead)</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+
+<h3 id="bug-fixing">Bug Fixing</h3>
+<ul>
+  <li>One of the first steps taken was to convert semantic segmentation labels into RGB values, integrating the segmentation and camera image into a 6-channel model input.</li>
+  <li>There were instances in the previously collected data where the agent overstepped the target location slightly before executing a 180-degree turn. To counter this, I reduced the time step of the synchronous mode in CARLA and also manually sifted through the episodes by monitoring the data collection process.</li>
+  <li>There was an anomaly with the RGB images collected in the previous week. Each time step did not correctly update the images, leading to discrepancies between the synchronization of the RGB images and the semantic segmentation samples. This inconsistency stemmed from the data collector using the same reference, rather than saving a distinct copy of each camera frame.</li>
+</ul>
+
+<h3 id="noise-injection">Noise Injection</h3>
+<p>The image below shows a (half) period of sine wave injected to the steer commands from the expert agent. The agent is able to correct the drift caused by the noise by steering to the opposite direction.</p>
+
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/noise_injection.png" width="500" /></center>
+
+<p>As shown in the video below, the agent drifts a little bit to the left or right from time to time due to the injected noise but it is able to steer back to the center of the lane:</p>
+
+<video width="800" controls="">
+  <source src="/gsoc2023-Meiqi_Zhao/assets/video/noisy_data_collection-2023-06-11_23.52.06.mp4" type="video/mp4" />
+</video>
+
+<h3 id="demo">Demo</h3>
+
+<video width="800" controls="">
+  <source src="/gsoc2023-Meiqi_Zhao/assets/video/v4_demo.mp4" type="video/mp4" />
+</video>
+
+<h2 id="references">References</h2>
+<p>[1] Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, &amp; Alexey Dosovitskiy. (2018). End-to-end Driving via Conditional Imitation Learning.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="DataCollection" /><category term="ImitationLearning" /><category term="DataAugmentation" /><summary type="html"><![CDATA[Train a better model with noise-injected data]]></summary></entry><entry><title type="html">Week 1: May 29 ~ June 04</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/" rel="alternate" type="text/html" title="Week 1: May 29 ~ June 04" /><published>2023-05-29T13:17:00-04:00</published><updated>2023-05-29T13:17:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week%201</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>The start of the official coding period for GSoC is here! In Monday’s meeting, we revisited the logistics and strategized the initial steps for implementing the data collection tool. Our approach is grounded in simplicity; we begin with basic scenarios and gradually integrate more complexity. Here are a few elementary scenarios we considered:</p>
 <ul>
   <li>Straight routes with no intersections or turns, as marked by red, green, and blue arrows in the image below, where other vehicles serve as dynamic obstacles.</li>
