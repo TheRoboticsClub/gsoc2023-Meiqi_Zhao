@@ -1,5 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-12T08:43:09-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 2: June 5 ~ June 11</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/" rel="alternate" type="text/html" title="Week 2: June 5 ~ June 11" /><published>2023-06-12T04:04:00-04:00</published><updated>2023-06-12T04:04:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-06-19T09:06:24-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Week 2: June 12 ~ June 18</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week3/" rel="alternate" type="text/html" title="Week 2: June 12 ~ June 18" /><published>2023-06-19T04:07:00-04:00</published><updated>2023-06-19T04:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week3</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week3/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>On Monday, we reviewed the performance of the model that we trained in Week 2. The model surpassed our initial expectations, demonstrating a surprising ability to follow the correct lane, pause when encountering vehicles upfront, and resume driving once the path ahead was clear. However, the model also showed a tendency to occasionally stop unnecessarily or collide with other vehicles.</p>
+
+<p>While the model passed most of our test scenarios, two significant limitations came to the forefront. 1. the model’s navigation abilities were limited to straight routes without intersections. 2. the testing and evaluation of the model were conducted exclusively in Town01, the same map where the training took place.</p>
+
+<p>Moving forward into Week 3, we aim to overcome these limitations. Our objective for this week is to enhance the model to become a more versatile lane follower — one that can navigate through diverse routes, including those with turns. Additionally, we plan to commence the evaluation of our models in an unseen environment. By testing the model on a new map, we can further ensure its ability to generalize and adapt to novel scenarios.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Experiment with removing the irrelevant part from segmentation and RGB images</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Experiment with affine transformations in addition to noise injection</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Try routes with turns and intersections</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add more obstacles such as pedestrians</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Explore which types of vehicles are present in the dataset</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Develop evaluation metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+
+<h3 id="carla-agentapi--traffic-manager">CARLA AgentAPI → Traffic Manager</h3>
+<p>Previously we had been using CARLA’s Behavior Agent to generate expert demonstrations for our imitation learning algorithm. The first problem we had to deal with was that the CARLA Behavior Agent was not able to reliably make turns without running into obstacles such as pavements or street light poles. There are several issues on CARLA’s github repo page reporting various similar problems with the Behavior Agent. The general advice from the community is to use the server-side autopilot, which is coordinated by the Traffic Manager, instead of the Agent API. The Traffic Manager offers more reliable and robust driving behavior, making it a better choice for our data collection process. 
+Thus our first step this week was to re-implement the data collection tool to leverage the Traffic Manager for controlling the ego-vehicle during data collection.</p>
+
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/right_turn_run_into_pavement.gif" width="500" />
+  <figcaption>Behavior Agent runs into pavement when making a right turn.</figcaption>
+  </center> 
+</figure>
+
+<h3 id="turning-decisions">Turning Decisions</h3>
+<p>Fortunately, starting from CARLA version 0.9.13, the Traffic Manager now supports setting routes and paths for individual vehicles, which makes it possible for us to conveniently set the agent to always turn right at intersections to simplify the turning decisions. In our current setup, we have strategically selected testing routes that enable the ego-vehicle to reach its target destination by always making right turns at intersections. By adopting this approach, we can focus on training our agent to learn how to make turns without the need for a complex global navigator.</p>
+
+<h3 id="traffic-light">Traffic Light</h3>
+<p>After switching to server-side autopilot by the Traffic Manager and training models on the new data, we realized that the trained agent tends to halt indefinitely in front of the traffic light regardless of its status. To address this issue, we implemented a simple workaround following codevilla et al.[1]: during data collection, we instructed the autopilot expert agent to ignore the traffic lights altogether. By doing so, we ensured that the agent would continue moving without halting at red lights.  However, it is important to note that other vehicles on the map still adhere to traffic rules, including waiting for the traffic lights to turn green before proceeding. As a result, if there is a line of vehicles ahead of our expert agent at an intersection, it will need to wait for those vehicles to start moving before it can proceed safely. This workaround allows us to collect data effectively while still considering the behavior of other vehicles on the road. Our expert agent can navigate through intersections smoothly by taking into account the actions of surrounding vehicles.</p>
+<video width="800" controls="">
+  <source src="/gsoc2023-Meiqi_Zhao/assets/video/v5.1_stops_indefinitely.mp4" type="video/mp4" />
+</video>
+
+<h3 id="affine-transformation">Affine Transformation</h3>
+<p>Besides noise injection during the data collection process as described in previous week’s post, we experimented with applying an affine transformation to images during training. The concept behind this transformation is to shift the images slightly to the left or right, simulating real-world scenarios where the vehicle may experience lateral displacement on the road. Note that we also adjust the recorded steering angle in the opposite direction of the image shift. This ensures that the model learns to compensate for the lateral displacement and effectively navigate the road, maintaining a consistent trajectory.</p>
+
+<center> <img src="/gsoc2023-Meiqi_Zhao/assets/img/affine transformation.png" width="500" /></center>
+
+<h3 id="class-filtering">Class Filtering</h3>
+<p>We also experiemented on masking out everything in the RGB and segmentation images except the vehicles, pedestrians, roads, and road lines. The image below depicts one example: (ignore the “Original” in the titles)</p>
+
+<center> <img src="/gsoc2023-Meiqi_Zhao/assets/img/masked_rgb_and_segmentation.png" width="500" /></center>
+
+<h3 id="models">Models</h3>
+<p>We trained and compared three models:</p>
+
+<ul>
+  <li><strong>v5.1</strong>: follow traffic lights and signs, noise injection (as described in previous week’s post)</li>
+  <li><strong>v5.2</strong>: ignore traffic lights and signs, noise injection</li>
+  <li><strong>v5.3</strong>: ignore traffic lights and signs, noise injection + affine transformation + class filter</li>
+</ul>
+
+<h3 id="evaluation">Evaluation</h3>
+<p>We evaluated the three models in Town02, a map unseen to the model during training, and compared their performance. There are 5 testing routes, each consisting of multiple intersections where the agent need to make a right turn.</p>
+
+<center> <img src="/gsoc2023-Meiqi_Zhao/assets/img/v5.1_v5.4_comparision.png" width="500" /></center>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Mean (m)</th>
+      <th>SD (m)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>v5.1</td>
+      <td>45.60</td>
+      <td>50.75</td>
+    </tr>
+    <tr>
+      <td>v5.3</td>
+      <td>135.05</td>
+      <td>72.16</td>
+    </tr>
+    <tr>
+      <td>v5.4</td>
+      <td>166.7</td>
+      <td>123.21</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="demo">Demo</h3>
+
+<video width="800" controls="">
+  <source src="/gsoc2023-Meiqi_Zhao/assets/video/v5.4_demo.mp4" type="video/mp4" />
+</video>
+
+<h2 id="references">References</h2>
+<p>[1] Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, &amp; Alexey Dosovitskiy. (2018). End-to-end Driving via Conditional Imitation Learning.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="ImitationLearning" /><category term="DataAugmentation" /><summary type="html"><![CDATA[Train lane follower that can make turns]]></summary></entry><entry><title type="html">Week 2: June 5 ~ June 11</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/" rel="alternate" type="text/html" title="Week 2: June 5 ~ June 11" /><published>2023-06-12T04:04:00-04:00</published><updated>2023-06-12T04:04:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>During Monday’s meeting, we discussed last week’s progress on developing the data collection tool and our initial analysis of the model, which was trained on the preliminary dataset. Nikhil highlighted an issue in my approach that I was using an array of semantic labels as the 4th channel to augment the RGB image data from the camera. He suggested a more effective method would be to transform these labels into RGB values, treating them in the same manner as the camera image for better feature learning.</p>
 
 <p>Data augmentation was another important aspect of imitation learning. Our last week’s model faced a challenge in self-correction: it would swiftly leave the lane if it deviated from the center, primarily because it was never exposed to situations where the expert demonstrates steering back from a drift. To improve this, we considered augmenting our dataset to include scenarios simulating recovery from disturbances. One potential solution involves applying an affine transformation to slightly shift the images left or right and adjust the steering values accordingly. This technique would expose the agent to scenarios where images are offset to one side and the steering angle is towards the opposite direction, thus teaching it how to auto-correct if it strays from the center of the lane.</p>
