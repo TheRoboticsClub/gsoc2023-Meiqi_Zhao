@@ -9,7 +9,7 @@
 <lastmod>2023-05-28T08:00:00-04:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week-1/</loc>
+<loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week1/</loc>
 <lastmod>2023-05-29T13:17:00-04:00</lastmod>
 </url>
 <url>
@@ -19,6 +19,10 @@
 <url>
 <loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week3/</loc>
 <lastmod>2023-06-19T04:07:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4/</loc>
+<lastmod>2023-06-27T19:05:00-04:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/about/</loc>
@@ -67,6 +71,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/category/training/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/category/evaluation/</loc>
 </url>
 <url>
 <loc>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/</loc>
