@@ -19,7 +19,6 @@ def get_actor_blueprints(world, filter, generation):
 
     try:
         int_generation = int(generation)
-        # Check if generation is in available generations
         if int_generation in [1, 2]:
             bps = [x for x in bps if int(x.get_attribute('generation')) == int_generation]
             return bps

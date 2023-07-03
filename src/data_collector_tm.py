@@ -5,24 +5,17 @@ import carla
 from traffic_utils import spawn_vehicles, spawn_pedestrians
 from agent import NoisyTrafficManagerAgent
 from sensors import RGBCamera, SegmentationCamera, setup_collision_sensor
-from utils import carla_seg_to_array, carla_rgb_to_array
+from utils import carla_seg_to_array, carla_rgb_to_array, road_option_to_int, read_routes
 import numpy as np
 import h5py
 
 has_collision = False
-
-def read_start_end_points(filename):
-    with open(filename, 'r') as f:
-        lines = f.readlines()
-    points = [(int(line.split()[0]), int(line.split()[1])) for line in lines]
-    return points
-
 def collision_callback(data):
     global has_collision
     has_collision = True
 
 def main(params):
-    episode_configs = read_start_end_points(params.episode_file)
+    episode_configs = read_routes(params.episode_file)
 
     # create carla client
     client = carla.Client(params.ip, params.port)
@@ -33,6 +26,10 @@ def main(params):
     if world.get_map().name.split('/')[-1] != params.map:
         world = client.load_world(params.map)
     map = world.get_map()
+
+    # set the weather to clear
+    weather = carla.WeatherParameters.ClearNoon
+    world.set_weather(weather)
     
     # set synchronous mode
     settings = world.get_settings()
@@ -62,9 +59,9 @@ def main(params):
         # get the specific spawn points
         spawn_points = map.get_spawn_points()
         episode_config = random.choice(episode_configs)
-        start_point = spawn_points[episode_config[0]]
-        end_point = spawn_points[episode_config[1]]
-        print(f"from spawn point #{episode_config[0]} to #{episode_config[1]}")
+        start_point = spawn_points[episode_config[0][0]]
+        end_point = spawn_points[episode_config[0][1]]
+        print(f"from spawn point #{start_point} to #{end_point}")
 
         # get the blueprint for this vehicle
         blueprint_library = world.get_blueprint_library()
@@ -78,10 +75,11 @@ def main(params):
         vehicle.set_autopilot(True)
         traffic_manager.ignore_lights_percentage(vehicle, 100)
         traffic_manager.ignore_signs_percentage(vehicle, 100)
+        traffic_manager.distance_to_leading_vehicle(vehicle, 4.0)
 
         # create and setup agent
         agent = NoisyTrafficManagerAgent(vehicle, traffic_manager)
-        route = ["Right"]*5
+        route = episode_config[1]
         agent.set_route(route, end_point)
 
         # set spectator
@@ -120,6 +118,7 @@ def main(params):
         frame = 0
         episode_data = {
             'frame': [],
+            'hlc': [],
             'controls': [],
             'measurements': [],
             'rgb': [],
@@ -164,6 +163,7 @@ def main(params):
             if not agent.noise: # only save data when agent performs recovery from noise
                 frame_data = {
                     'frame': np.array([frame]),
+                    'hlc': np.array([road_option_to_int(agent.get_next_action())]),
                     'controls': np.array([control.throttle, control.steer, control.brake]),
                     'measurements': np.array([speed]),
                     'rgb': np.copy(carla_rgb_to_array(rgb_cam.get_sensor_data())),
@@ -172,6 +172,7 @@ def main(params):
                 for key, value in frame_data.items():
                     episode_data[key].append(value)
 
+            print(f"next action: {agent.get_next_action()}, {road_option_to_int(agent.get_next_action())}")
             print(f'{frame} throttle: {control.throttle}, brake: {control.brake}, steer: {control.steer}')
             print(f'{frame} speed: {speed}')
 
@@ -179,7 +180,7 @@ def main(params):
             frame += 1
         
         if (not has_collision) and frame < params.max_frames_per_episode:
-            with h5py.File(f'{params.dataset_path}/episode_{episode_cnt}.hdf5', 'w') as file:
+            with h5py.File(f'{params.dataset_path}/episode_{episode_cnt + 24}.hdf5', 'w') as file:
                 for key, data_list in episode_data.items():
                     data_array = np.array(data_list)
                     file.create_dataset(key, data=data_array, maxshape=(None,)+data_array.shape[1:])
@@ -204,3 +205,5 @@ if __name__ == '__main__':
 
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
     main(params)
+
+    # python data_collector_tm.py --dataset_path ./data --episode_file Town01_All.txt --n_episodes 10

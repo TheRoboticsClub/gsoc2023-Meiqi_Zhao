@@ -1,16 +1,26 @@
 import numpy as np
 import carla
 
-"""
-Pickling of "carla.libcarla.VehicleControl" instances is not enabled,
-need to convert from VehicleControl to dict
-"""
-def vehicle_control_to_dict(vehicle_control):
-    return {
-        'throttle': vehicle_control.throttle,
-        'steer': vehicle_control.steer,
-        'brake': vehicle_control.brake,
+
+def road_option_to_int(high_level_command):
+    """convert CARLA.RoadOptions to integer"""
+    road_option_dict = {
+        "LaneFollow": 0,
+        "Left": 1,
+        "Right": 2,
+        "Straight": 3
     }
+    return road_option_dict[high_level_command]
+
+def int_to_road_option(high_level_command):
+    """convert integer high-level command to Carla.RoadOptions"""
+    road_option_dict = {
+        0: "LaneFollow",
+        1: "Left",
+        2: "Right",
+        3: "Straight"
+    }
+    return road_option_dict[high_level_command]
 
 def to_bgra_array(image):
     """Convert a CARLA raw image to a BGRA numpy array."""
@@ -20,6 +30,7 @@ def to_bgra_array(image):
 
 
 def carla_rgb_to_array(image):
+    """Convert a CARLA raw image to an RGB numpy array"""
     array = to_bgra_array(image)
     # Convert BGRA to RGB.
     array = array[:, :, :3]
@@ -63,3 +74,12 @@ def carla_seg_to_array(image):
     for key, value in classes.items():
         result[np.where(array == key)] = value
     return result.astype(np.uint8)
+
+
+def read_routes(filename):
+    """Read routes/episodes from txt file"""
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    routes = [((int(line.split()[0]), int(line.split()[1])), line.split()[2:]) for line in lines]
+    return routes
+

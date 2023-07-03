@@ -1,5 +1,6 @@
 import random
 from agents.navigation.behavior_agent import BehaviorAgent
+from agents.navigation.constant_velocity_agent import ConstantVelocityAgent
 import numpy as np
 import carla
 
@@ -14,6 +15,7 @@ class NoisyBehaviorAgent(BehaviorAgent):
         self.noise_duration = random.randint(50, 150)
         self.noise = False
         self.multiplier = 1.0
+    
 
     def run_step(self, debug=False):
         """
@@ -141,6 +143,9 @@ class NoisyTrafficManagerAgent:
         self.route = route
         self.traffic_manager.set_route(self.vehicle, route)
         self.destination = destination
+
+    def get_next_action(self):
+        return self.traffic_manager.get_next_action(self.vehicle)[0]
 
     def done(self):
         vehicle_location = self.vehicle.get_location()
