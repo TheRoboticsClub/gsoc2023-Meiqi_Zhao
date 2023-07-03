@@ -1,9 +1,9 @@
 # Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models
 
 ## Model Architecture
-```
+
 ![model architecture](assets/model_architecture_v6.2.png "v6.2 model architecture")
-```
+
 ## Usage
 ### Data collector
 To run the data collector: 
