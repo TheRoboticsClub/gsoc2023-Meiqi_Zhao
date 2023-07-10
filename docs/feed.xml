@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-09T18:28:54-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-10T08:48:38-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
 </subtitle><entry><title type="html">Week 5: June 26 ~ July 02</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/" rel="alternate" type="text/html" title="Week 5: June 26 ~ July 02" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>Our current model employs an embedding layer to process the high-level commands, which are then concatenated with the flattened visual features. However, given that we only have four discrete high-level commands, the use of an embedding layer might be overcomplicated for our scenario. Therefore, we plan to experiment with one-hot encoding for these high-level commands this week.</p>
 
@@ -43,10 +43,43 @@ and write a README.</p>
 </ul>
 <center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v6.4_model architecture.png" width="600" /></center>
 <p>As can be seen in the video below, the model learns to stop at traffic lights. Please note that the video demonstrates successful cases primarily. The overall performance of the model, however, is not yet optimal, as it frequently runs red lights. We will continuously workto improve this aspect and to make our model more accurate in responding to traffic signals.</p>
-<iframe src="https://drive.google.com/file/d/1Bv1x-BFap-OQSNPYq4br505vj7F-7nJG/preview" width="800" height="450" allow="autoplay"></iframe>
+<iframe src="https://drive.google.com/file/d/1Bv1x-BFap-OQSNPYq4br505vj7F-7nJG/preview" width="800" height="450" allow="autoplay"></iframe>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[Enhancing agent's traffic light adherence]]></summary></entry><entry><title type="html">Week 6: July 03 ~ July 09</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6/" rel="alternate" type="text/html" title="Week 6: July 03 ~ July 09" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>The main objective for this week is to develop more sophisticated evaluation metrics beyond the existing success rate and average distance traveled before a collision. Specifically, we intend to incorporate metrics from the <a href="https://leaderboard.carla.org/">CARLA Leaderboard</a> into our evaluation process, which take into account route completion and traffic infractions when calculating a score for model performance.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish editing the demo video</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Develop advanced evaluation metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Debug CARLA 0.9.14 segmentation label issue</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Study evaluation metrics in Behavior Metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="current-models">Current models</h3>
+<p>Following the upgrade to CARLA 0.9.14, due to the changes in the semantic segmentation labels, we had to retrain our previous models which were initially trained under CARLA 0.9.13. Below is a summary of the current state of our models (see <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week5">previous post</a> for model architectures):</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7_models.png" width="400" /></center>
+<p>By comparing v7.0 and v7.1, we aim to discern whether one-hot encoding or an embedding layer leads to superior performance. Furthermore, by comparing v7.1 and v7.2 and specifically observing the number of traffic light infractions, we can evaluate how effectively model v7.2 has learned to adhere to traffic light signals.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+<p>Following the scoring system of the CARLA Leaderboard, we have updated our evaluation metrics as follows:</p>
+<ul>
+  <li><strong>Driving Score</strong>: \(R_i P_i\) where \(R_i\) represents the percentage of completion of the \(i\)-th route and \(P_i\) the infraction penalty of the \(i\)−th route.</li>
+  <li><strong>Route Completion</strong>: This metric represents the percentage of the route completed. For each testing route, we pre-calculate the total length of the route by letting an expert agent, i.e., the CARLA autopilot, drive through the route and measure the distance traveled from start to end.</li>
+  <li><strong>Infraction Penalty</strong>: \(\prod_j (p_i ^j)^{\text{# of infractions}_j}\) where \(p^j\) is the penalty of infractions of type \(j\) as specified below:
+    <ul>
+      <li>Collision with walker: <strong>0.5</strong></li>
+      <li>Collision with other vehicle: <strong>0.6</strong></li>
+      <li>Collision with static objects: <strong>0.65</strong></li>
+      <li>Timeout: <strong>0.7</strong></li>
+      <li>Running a red light: <strong>0.7</strong>
+The overall driving score will be the arithmetic mean of the driving scores of all routes.</li>
+    </ul>
+  </li>
+</ul>
+
 <h3 id="demo-video">Demo Video</h3>
 <p>Finally, we edited and uploaded a demo video for the Youtube channel. Check it out here:</p>
-<iframe width="800" height="450" src="https://www.youtube.com/embed/PsmpY6ZeT4I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[Enhancing agent's traffic light adherence]]></summary></entry><entry><title type="html">Week 4: June 19 ~ June 25</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4/" rel="alternate" type="text/html" title="Week 4: June 19 ~ June 25" /><published>2023-06-27T19:05:00-04:00</published><updated>2023-06-27T19:05:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/PsmpY6ZeT4I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[More sophisticated evaluation metrics]]></summary></entry><entry><title type="html">Week 4: June 19 ~ June 25</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4/" rel="alternate" type="text/html" title="Week 4: June 19 ~ June 25" /><published>2023-06-27T19:05:00-04:00</published><updated>2023-06-27T19:05:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week4/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>The main goal of this week is to expand the model such that the agent can make turns in any direction at intersections instead of <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week3">always turning right</a>. In order to achieve this, the model needs to take a high-level command (LaneFollow, Left, Right, Straight) in addition to sensory input to guide it to either follow the lane or make turns at junctions. Thus, a new data collection routine needs to be implemented and the model architecture needs to be updated to incorporate the high-level command.</p>
 
 <h2 id="objectives">Objectives</h2>

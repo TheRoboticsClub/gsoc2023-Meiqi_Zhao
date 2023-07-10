@@ -10,10 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ImitationLearning | Meiqi Zhao | JdeRobot x GSoC2023</title>
+    <title>Week 6: July 03 ~ July 09 | Meiqi Zhao | JdeRobot x GSoC2023</title>
     <meta name="author" content="JdeRobot x Google Summer of Code 2023">
-    <meta name="description" content="A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-">
+    <meta name="description" content="More sophisticated evaluation metrics">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -39,7 +38,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/gsoc2023-Meiqi_Zhao/assets/css/main.css">
-    <link rel="canonical" href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/tag/imitationlearning/">
+    <link rel="canonical" href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6/">
 
     <!-- Dark Mode -->
     
@@ -114,69 +113,128 @@
     <!-- Content -->
     <div class="container mt-5">
       
-        <div class="post">
+        <!-- _layouts/post.html -->
+
+<div class="post">
 
   <header class="post-header">
-    <h1 class="post-title"> <i class="fas fa-hashtag fa-sm"></i> ImitationLearning </h1>
-    <p class="post-description"> an archive of posts with this tag </p>
+    <h1 class="post-title">Week 6: July 03 ~ July 09</h1>
+    <p class="post-meta">July 9, 2023</p>
+    <p class="post-tags">
+      <a href="/gsoc2023-Meiqi_Zhao/blog/2023"> <i class="fas fa-calendar fa-sm"></i> 2023 </a>
+        ·  
+        <a href="/gsoc2023-Meiqi_Zhao/blog/tag/imitationlearning">
+          <i class="fas fa-hashtag fa-sm"></i> ImitationLearning</a>  
+          
+        ·  
+        <a href="/gsoc2023-Meiqi_Zhao/blog/category/weeklyupdates">
+          <i class="fas fa-tag fa-sm"></i> WeeklyUpdates</a>  
+          <a href="/gsoc2023-Meiqi_Zhao/blog/category/coding">
+          <i class="fas fa-tag fa-sm"></i> Coding</a>  
+          <a href="/gsoc2023-Meiqi_Zhao/blog/category/training">
+          <i class="fas fa-tag fa-sm"></i> Training</a>  
+          <a href="/gsoc2023-Meiqi_Zhao/blog/category/evaluation">
+          <i class="fas fa-tag fa-sm"></i> Evaluation</a>  
+          
+
+    </p>
   </header>
 
-  <article>
-    <div class="table-responsive">
-      <table class="table table-sm table-borderless">
-        
-        <tr>
-          <th scope="row">Jul 9, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week6/">Week 6: July 03 ~ July 09</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Jul 9, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week5/">Week 5: June 26 ~ July 02</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Jun 27, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week4/">Week 4: June 19 ~ June 25</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Jun 19, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week3/">Week 3: June 12 ~ June 18</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">Jun 12, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week2/">Week 2: June 5 ~ June 11</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">May 29, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/week1/">Week 1: May 29 ~ June 04</a>
-          </td>
-        </tr>
-      
-        <tr>
-          <th scope="row">May 20, 2023</th>
-          <td>
-              <a class="post-link" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/">Community Bonding: May 15 ~ May 21</a>
-          </td>
-        </tr>
-      
-      </table>
+  <article class="post-content">
+    
+    <div id="markdown-content">
+      <h2 id="preliminaries">Preliminaries</h2>
+<p>The main objective for this week is to develop more sophisticated evaluation metrics beyond the existing success rate and average distance traveled before a collision. Specifically, we intend to incorporate metrics from the <a href="https://leaderboard.carla.org/" rel="external nofollow noopener" target="_blank">CARLA Leaderboard</a> into our evaluation process, which take into account route completion and traffic infractions when calculating a score for model performance.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Finish editing the demo video</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Develop advanced evaluation metrics</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Debug CARLA 0.9.14 segmentation label issue</li>
+  <li class="task-list-item">
+<input type="checkbox" class="task-list-item-checkbox" disabled>Study evaluation metrics in Behavior Metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="current-models">Current models</h3>
+<p>Following the upgrade to CARLA 0.9.14, due to the changes in the semantic segmentation labels, we had to retrain our previous models which were initially trained under CARLA 0.9.13. Below is a summary of the current state of our models (see <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week5">previous post</a> for model architectures):</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7_models.png" width="400"></center>
+<p>By comparing v7.0 and v7.1, we aim to discern whether one-hot encoding or an embedding layer leads to superior performance. Furthermore, by comparing v7.1 and v7.2 and specifically observing the number of traffic light infractions, we can evaluate how effectively model v7.2 has learned to adhere to traffic light signals.</p>
+
+<h3 id="evaluation-metrics">Evaluation Metrics</h3>
+<p>Following the scoring system of the CARLA Leaderboard, we have updated our evaluation metrics as follows:</p>
+<ul>
+  <li>
+<strong>Driving Score</strong>: \(R_i P_i\) where \(R_i\) represents the percentage of completion of the \(i\)-th route and \(P_i\) the infraction penalty of the \(i\)−th route.</li>
+  <li>
+<strong>Route Completion</strong>: This metric represents the percentage of the route completed. For each testing route, we pre-calculate the total length of the route by letting an expert agent, i.e., the CARLA autopilot, drive through the route and measure the distance traveled from start to end.</li>
+  <li>
+<strong>Infraction Penalty</strong>: \(\prod_j (p_i ^j)^{\text{# of infractions}_j}\) where \(p^j\) is the penalty of infractions of type \(j\) as specified below:
+    <ul>
+      <li>Collision with walker: <strong>0.5</strong>
+</li>
+      <li>Collision with other vehicle: <strong>0.6</strong>
+</li>
+      <li>Collision with static objects: <strong>0.65</strong>
+</li>
+      <li>Timeout: <strong>0.7</strong>
+</li>
+      <li>Running a red light: <strong>0.7</strong>
+The overall driving score will be the arithmetic mean of the driving scores of all routes.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="demo-video">Demo Video</h3>
+<p>Finally, we edited and uploaded a demo video for the Youtube channel. Check it out here:</p>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/PsmpY6ZeT4I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+
     </div>
   </article>
+
+
+  
+    
+    <br>
+    <hr>
+    <br>
+    <ul class="list-disc pl-8"></ul>
+
+    <!-- Adds related posts to the end of an article -->
+    <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+    <p class="mb-2">Here are some more articles you might like to read next:</p>
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week4/">Week 4: June 19 ~ June 25</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week5/">Week 5: June 26 ~ July 02</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week3/">Week 3: June 12 ~ June 18</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/">Community Bonding: May 15 ~ May 21</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week1/">Week 1: May 29 ~ June 04</a>
+  </li>
 
 </div>
 
