@@ -1,5 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-07-12T10:57:37-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 5: June 26 ~ July 02</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/" rel="alternate" type="text/html" title="Week 5: June 26 ~ July 02" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-08-04T17:11:07-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Week 9: July 24 ~ July 30</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/" rel="alternate" type="text/html" title="Week 9: July 24 ~ July 30" /><published>2023-07-31T04:39:00-04:00</published><updated>2023-07-31T04:39:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week, our focus was on enhancing the performance of the model, particularly in addressing a prevalent issue identified in the previous week: the model would suddenly halt and become stuck in a state, especially when it is crossing an intersection. We tackled this problem using two main approaches:</p>
+<ul>
+  <li>Finetuning the model with more junction data.</li>
+  <li>Use DAgger (Data Aggregation) to iteratively improve the model.</li>
+</ul>
+
+<p>In addition, we faced a problem with our current evaluation metrics: they do not detect whether the model is correctly following turning instructions. During an evaluation episode, if the vehicle makes a wrong turn, calculating the percentage of the route completed becomes meaningless since it deviates from the intended route. Thus, it’s necessary to implement a mechanism to detect which turn the vehicle actually made. This way, we can terminate the testing episode if an incorrect turn is made and proceed to the next one.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Refine the evaluation metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Continue improving model (finetuning, DAgger)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish setting up Behavior Metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="current-models">Current Models</h3>
+<p>This week we trained and compared three models:</p>
+
+<ul>
+  <li><strong>v8.0</strong>: vanilla model trained on 80 episodes of training data</li>
+  <li><strong>v8.1</strong>: v8.0 finetuned on 80 additional junction data episodes</li>
+  <li><strong>v8.2</strong>: v8.0 retrained with DAgger for 3 iterations</li>
+</ul>
+
+<h3 id="baseline---v80">Baseline - v8.0</h3>
+<p>In the video below, the agent is able to roam the streets without suddenly stopping. However, we can still observe several problems. 
+(1) It fails to make a left turn at around 00:40.
+(2) Starting from 1:15, the agent drifts to the left lane, potentially causing a collision if there were other vehicles around.</p>
+<center><iframe src="https://drive.google.com/file/d/1fu0glSpZwSh89i51v1D0u4ujSK1jWc24/preview" width="560" height="400" allow="autoplay"></iframe></center>
+
+<h3 id="modified-dagger-implementation">(Modified) DAgger Implementation</h3>
+<p>One of the challenges this week was to implement DAgger. As <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">previously</a> described, DAgger involves running the trained agent in the simulator, with the expert on the side.  This allows the expert to demonstrate in more diverse scenearios that the agent might realistically encounter. While the agent drives the car, we record the actions the expert would have taken for each state and add this extra data to our dataset to retrain the model.
+However, using the CARLA traffic manager as the expert presents a challenge, as there is no way to “query” the expert while allowing the agent to drive the vehicle. To address this, we implemented DAgger in the following way:</p>
+
+<ul>
+  <li>Train an agent using the initial dataset.</li>
+  <li>Allow both the agent and the expert to drive the car in the simulator, <strong>alternating every 20 frames</strong>.</li>
+  <li>Only record the actions taken by the expert, not the agent.</li>
+  <li>Incorporate the new data into the training set and retrain the agent.</li>
+  <li>Repeat Process, iteratively refining the agent’s performance.</li>
+</ul>
+
+<p>The image below demonstrates a contrasting situation where the expert and the model choose different actions during DAgger data collection. In this specific scenario, the agent (model) opts to accelerate, likely because the traffic light is green. Meanwhile, the expert seizes the opportunity to demonstrate the “correct” action by applying the brake, recognizing the presence of another vehicle ahead. This example highlights the valuable corrections that the expert can provide in the DAgger process, guiding the model towards more sophisticated decision-making in complex scenarios.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/DAgger_data collection.png" /></center>
+
+<h3 id="turning-detection">Turning Detection</h3>
+<p>During evaluation, the model is tested on a set of routes with predefined starting and target locations, as well as a sequence of turning instructions. In order to better 
+evaluate the model, we developed a mechanism to accumulately calculate the angle turned at a junction, as shown in the picture below. The idea is to record the changes in the yaw of the vehicle upon entering a junction. When the evluation program detects a failed or wrong turn, the episode ends and the testing moves on to the next one.</p>
+
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/turning_angle_calculation.png" width="400" /></center>
+
+<h3 id="demo-822">Demo 8.2.2</h3>
+<p>The video below demonstrates the model refined by DAgger for three times. For testing its ability to follow the lane and navigate intersections, no obstacles are spawned and the traffic lights are set to green.</p>
+<center><iframe src="https://drive.google.com/file/d/1Fhhggpjm8W3gMyEViL7gaJ8C1GO2Vmwt/preview" width="560" height="400" allow="autoplay"></iframe></center>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><category term="Finetuning" /><category term="DAgger" /><summary type="html"><![CDATA[Using Data Aggregation(DAgger) for iterative improvement, and implementing a refined mechanism for turn detection in evaluations.]]></summary></entry><entry><title type="html">Week 8: July 17 ~ July 23</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week8/" rel="alternate" type="text/html" title="Week 8: July 17 ~ July 23" /><published>2023-07-24T04:47:00-04:00</published><updated>2023-07-24T04:47:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week8</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week8/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week we focused on addressing the “halting” problem in the latest model we observed from last week. The problem occurs the most frequently when the vehicle is making a turn at intersections where they would suddenly stop in the middle of the road and get stuck in that state.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Experiment with adding more meaningful data, adding more modalities etc to address the halting problem</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish installing Behavior Metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="efficient-data-collection">Efficient data collection</h3>
+<p>The solution to most problems in the realm of machine learning lies in more data. In research settings, autonomous driving tasks often require dozens to hundreds of hours of driving data. Given computational limitations, we’re currently collecting under 100 episodes of training data in the CARLA simulator, amassing a few hours of driving at most. Therefore, we need to make our data collection process as efficient and effective as possible. This week, we explored the following ways to optimize data collection:</p>
+<ul>
+  <li><strong>Data Trimming</strong>: A typical episode in the training set usually involves the agent waiting at the intersection for a long time. We removed segments where the vehicle stops and the throttle remains below 0.01 after more than 50 frames. This step helps eliminate redundant data and increases the effectiveness of our dataset.</li>
+  <li><strong>Data prioritization</strong>: Certain tasks, such as making turns at intersections and obstacle avoidance, are more complex and crucial. Therefore, we should prioritize these scenarios in our data collection.</li>
+  <li><strong>Selective Data Retention</strong>: After the initial training, we can analyze the scenarios where the model underperforms, and focus on collecting and retaining more data that reflects these scenarios.</li>
+</ul>
+
+<h3 id="finetuning-on-junction-only-dataset">Finetuning on Junction-Only Dataset</h3>
+<p>In previous week, our observation was that the model often stops suddenly in the middle of making a turn at an intersection. By collecting additional episodes that specifically targeted junctions, we were able to create a “junction-only” dataset. This allowed us to finetune the model to hopefully better learn the nuances of navigating intersections from the additional data. The image below illustrates a few examples of the data collected.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/junctions_data_collection.gif" width="400" /></center>
+
+<p>The video below demonstrates an example of vehicle successfully making a left turn after finetuning.</p>
+<center><iframe src="https://drive.google.com/file/d/1HGh6hiu3nq49x0F14oAKhwQQtC0nIPuZ/preview" width="560" height="400" allow="autoplay"></iframe></center>
+<p>However, even after finetuning. Some problems persist. The next video shows a failed example where the vehicle goes straight at an intersection despite the “Turn Left” command.</p>
+<center><iframe src="https://drive.google.com/file/d/1zLqXFHLEUZsSmiFUDuwplV_PmJbhexcF/preview" width="560" height="400" allow="autoplay"></iframe></center>
+
+<p>Overall, there is some improvement and the agent seems to get stuck less at intersections after finetuning. To truly evaluate the effectiveness of the finetuning, especially in terms of the success rate of making turns, we need to develop a mechanism for detecting whether the agent successfully makes a turn or not, which is lacking in our current evaluation process. (<strong>Update</strong>: turning detection implemented in <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week9">week 9</a>)</p>
+
+<h3 id="data-aggregation-dagger">Data Aggregation (DAgger)</h3>
+<p>Another technique that we plan to try in the following week is called Data Aggregation(DAgger)[1]. DAgger is an iterative algorithm designed to improve the performance of machine learning models, particularly imitation learning. Traditional imitation learning can sometimes lead to a problem known as “distributional shift,” where a trained model, when put into practice, might encounter states that were not well-represented in the initial training data. This discrepancy can result in suboptimal or incorrect actions by the model.</p>
+
+<p>DAgger addresses this issue by iteratively training the model with a combination of its own behavior and expert guidance. By repeatedly collecting the states that the policy experiences and querying an expert for the correct actions, DAgger continually refines the training dataset and the policy. This approach helps the model to generalize better to unseen states, aligning more closely with the expert’s performance.</p>
+
+<p>In the context of our project, the steps to apply DAgger can be outlined as follows:</p>
+
+<ol>
+  <li>Initialize dataset D with autopilot expert demonstrations</li>
+  <li>Train policy on D</li>
+  <li>Run trained policy in the simulator: only save the states that the policy sees, not the actions it takes.</li>
+  <li>Ask the expert for actions: For each state in the newly generated trajectory, query the expert what action they would take</li>
+  <li>Add the new state-action pairs to D</li>
+  <li>Retrain policy on D</li>
+  <li>Repeat steps 3-6 for a number of iterations</li>
+</ol>
+
+<h2 id="references">References</h2>
+<p>[1] Stephane Ross, Geoffrey J. Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In Conference on Artificial Intelligence and Statistics (AISTATS), 2011.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><category term="Finetuning" /><summary type="html"><![CDATA[Addressing the model's "halting" issue at intersections through specialized data collection and finetuning]]></summary></entry><entry><title type="html">Week 7: July 10 ~ July 16</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7/" rel="alternate" type="text/html" title="Week 7: July 10 ~ July 16" /><published>2023-07-24T04:30:00-04:00</published><updated>2023-07-24T04:30:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week we continue to improve the performance of our model. One major problem we faced this week is the problem of the agent occasionally stopping and getting stuck in a state, which we call the “halting” problem. Understanding and addressing this issue became a central focus, leading us to think about the underlying circumstances and potential solutions. Furthermore, we have also explored the model’s response to traffic lights and conducted cross-town testing to understand generalization.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Complete midterm evaluation</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish training and evaluating v7.0, 7.1</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Confirm whether the model needs a larger amount of data</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Read literature on the halting problem</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Continue reading codebase of Behavior Metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Integrate the existing evaluation metrics into Behavior Metrics</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="current-models">Current Models</h3>
+<p>Below is a summary of our current models and their performance. As shown in the first table, using one-hot encoding vs an embedding layer for the high level command does not have a big impact on the model in terms of overall performance (<a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">How is driving score calculated?</a>). The second table compares model v7.1 and v7.2, the former ignores the traffic light status and the latter is trained with the traffic light as an additional input to the model. The results show that 
+just by passing the status of the traffic light (Not at traffic light, Red, Green, Yellow) as a one-hot encoding, the model is able to effectively follow the traffic light in testing.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7.0_vs_v7.1.png" width="500" /></center>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7.1_vs_v7.2.png" width="500" /></center>
+
+<h3 id="testing-in-town01-vs-town02">Testing in Town01 vs Town02</h3>
+<p>So far we have only been training our model in Town01 in CARLA and testing in a different town, Town02. In order to verify whether the model can benefit from a larger amount of data, we tested the model in Town01 vs in Town02. As expected, as shown in the table below, the model performs significantly worse in unseen environmenet. This indicates that if we want to improve the model’s generalization to different environments, we must consider expanding the training data to include various towns, roads, and scenarios. One of the conclusions drawn from this experiment is that a model trained exclusively on Town01 data is overfitting to that particular environment. While it may perform admirably in familiar surroundings, its performance degrades when presented with unseen or novel situations.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/Town01_vs_Town02.png" width="400" /></center>
+
+<h3 id="the-halting-problem">The “Halting” Problem</h3>
+<p>One of the persistent challenges we encountered this week is what we term the “halting” problem. This issue is characterized by the agent suddenly stopping in the middle of a task, getting stuck in a particular state and unable to continue its course.  To understand this problem more deeply, we began to analyze the specific circumstances under which the halting occurs. We made the following observations:</p>
+
+<ol>
+  <li>Although this issue can surface in a variety of situations, it is most commonly observed when the vehicle is navigating turns at intersections.</li>
+  <li>While the vehicle is immobilized, we noted that the throttle value hovers close to 0.0, whereas the brake value often exceeds 0.9. Interestingly, when the agent perceives another vehicle passing by, it releases the brake and begins to accelerate. However, this short-lived acceleration fails to significantly alter the vehicle’s position, leaving it stagnant once more.</li>
+</ol>
+
+<p>The image below illustrates two typical instances of the “halting” issue, where the vehicle becomes stuck without apparent cause.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/halting.png" width="800" /></center>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[Exploring model improvements, focusing on the "halting" problem and generalization.]]></summary></entry><entry><title type="html">Week 5: June 26 ~ July 02</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/" rel="alternate" type="text/html" title="Week 5: June 26 ~ July 02" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>Our current model employs an embedding layer to process the high-level commands, which are then concatenated with the flattened visual features. However, given that we only have four discrete high-level commands, the use of an embedding layer might be overcomplicated for our scenario. Therefore, we plan to experiment with one-hot encoding for these high-level commands this week.</p>
 
 <p>Until now, our model has ignored traffic lights as the expert agent was configured to do so during data collection. However, we believe incorporating traffic light status as an additional input to our model would make our agent more compliant with real-world traffic regulations.</p>
@@ -430,32 +565,4 @@ In addition, we decided the implementation of the data collection tool should be
 
 <p>[4] Carla Data Collector: https://github.com/carla-simulator/data-collector/tree/master</p>
 
-<p>[5] Carla Driving Benchmark: https://github.com/carla-simulator/driving-benchmarks/tree/master</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="DataCollection" /><category term="CARLA" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[second week of the community bonding period; research data collection methods]]></summary></entry><entry><title type="html">Community Bonding: May 15 ~ May 21</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/" rel="alternate" type="text/html" title="Community Bonding: May 15 ~ May 21" /><published>2023-05-20T07:05:00-04:00</published><updated>2023-05-20T07:05:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community%20bonding%20week%201</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/"><![CDATA[<p>I’m thrilled to be part of Google Summer of Code 2023! This week marks the official start of the community bonding period at JdeRobot, and I couldn’t be more excited. My project, “Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models”, promises to be a fascinating, research-oriented endeavor, which will see me dive deep into the fields of imitation learning and autonomous driving. Let’s get started!</p>
-
-<p>This week we held our first official meeting, where we introduced ourselves, and the mentors went over the program’s logistics. We also laid out the goals for the week, which are listed below.</p>
-
-<h2 id="preliminaries">Preliminaries</h2>
-<p>Before the official start of GSoC, I had already familiarized myself with the Behavior Metrics project’s codebase. My initial involvement came during the application phase, where I actively engaged with the project, contributing to its development by opening and successfully completing two GitHub issues and submitted pull requests (<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/606">#606</a>, <a href="https://github.com/JdeRobot/BehaviorMetrics/pull/620">#620</a>) that added obstacles to the autonomous driving task in CARLA simulator. Before, Behavior Metrics only supported scenarios where the autonomous vehicle simply followed the lane without encountering obstacles. The goal for this summer is to introduce an obstacle avoidance task, training and testing the autonomous vehicle in scenarios populated with other vehicles and pedestrians. Currently, only one dynamic obstacle is added for experimental purposes. More complex simulation senarios will be designed and implemented down the road. This prelimiary experience with the project has provided me with a strong foundation to start my GSoC journey.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Set up blog website using Jekyll and Github Pages</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Set up the roadmap page of the blog</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Conduct literature research on imitation learning, autonomous driving, and obstacle avoidance</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Write a first blog documenting this week’s progress</li>
-</ul>
-
-<h2 id="progress">Progress</h2>
-
-<p>This week I’ve focused on setting up this blog website. It’s crucial to have a centralized platform to document my journey and update my progress throughout the project. As suggested by the mentors, I decided to use Jekyll, a static site generator, along with GitHub Pages for hosting the website.</p>
-
-<p>During my literature search, I encountered an interesting paper by Zhou et al[1]. which compares an end-to-end pixels-to-actions baseline model with models that receives computer vision representations as additional modalities, including depth images, semantic and instance segmentation masks, optical flow, and albedo. The experimental results indicated that ground truth vision representations significantly improved visuomotor policies in an urban driving task in terms of success rate and weighted success rate. Furthermore, even imperfect representations predicted by a simple U-Net provided some advantages. In our project, we will begin with ground truth semantic segmentation provided by the CARLA simulator. If time permits, it might be interesting to compare the performance of the model with and without the segmentation mask.</p>
-
-<p>Another notable paper by Eraqi et al.[2] proposed a conditional imitation model improved by feature-level fusion of lidar scan with RGB camera image. The idea is that the camera and lidar are complementary, as the camera perceives color and texture of objects while lidar captures depth information and is less sensitive to ambient light. In our project, we will introduce semantic segmentation as an additional input to the model. Therefore, experimenting with different fusion strategies could be interesting.</p>
-
-<p>For our project, we might consider adopting the data collection method used by Zhou et al., which involves only sampling routes where target locations are reachable by turning right at every intersection from the starting locations. This approach effectively sidesteps the need to implement a global route planner, as used in Eraqi et al.</p>
-
-<h2 id="references">References</h2>
-<p>[1] Brady Zhou, et al. “Does computer vision matter for action?”. CoRR abs/1905.12887. (2019).</p>
-
-<p>[2] Hesham M. Eraqi, et al. “Dynamic Conditional Imitation Learning for Autonomous Driving”. IEEE Transactions on Intelligent Transportation Systems 23. 12(2022): 22988–23001.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="JdeRobot" /><category term="BehaviorMetrics" /><category term="GSoC" /><category term="ImitationLearning" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[first week of the community bonding period; literature search on imitation learning and autonomous driving]]></summary></entry></feed>
+<p>[5] Carla Driving Benchmark: https://github.com/carla-simulator/driving-benchmarks/tree/master</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="DataCollection" /><category term="CARLA" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[second week of the community bonding period; research data collection methods]]></summary></entry></feed>
