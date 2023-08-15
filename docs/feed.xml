@@ -1,5 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-08-04T17:11:07-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 9: July 24 ~ July 30</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/" rel="alternate" type="text/html" title="Week 9: July 24 ~ July 30" /><published>2023-07-31T04:39:00-04:00</published><updated>2023-07-31T04:39:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-08-15T13:04:27-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Week 12: Aug 14 ~ Aug 20</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/" rel="alternate" type="text/html" title="Week 12: Aug 14 ~ Aug 20" /><published>2023-08-15T08:49:00-04:00</published><updated>2023-08-15T08:49:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week, we revisited the challenge of improving our model’s obstacle avoidance. Our prior effort with a weighted L1 loss showed limited progress. The prevailing issue is the model fails to learn to use the brake at all. This week we would like to explore other approaches. One approach involves expanding the dataset with more braking scenarios. We hypothesize that a dataset enriched with varied braking examples might guide the model towards better braking responses. We also plan to experiment with combining the throttle and brake as one model output. At present, our model produces three separate outputs for throttle, steering, and braking, all ranging between [0, 1]. However, a practical observation is that increasing throttle often corresponds with decreased braking, and vice versa. By combining throttle and brake into a single output, we aim to improve the obstacle avoidance capabilities of our model.</p>
+
+<p>Simultaneously, we’re progressing with our Behavior Metrics integration. A priority is to draft a PR for our recently developed traffic generation feature, inviting mentor feedback. Furthermore, if time allows, we hope to lay groundwork for loading our model within Behavior Metrics.</p>
+
+<h2 id="objectives-as-of-aug-15">Objectives (As of Aug 15)</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Release posts for weeks 10 and 11</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Expand dataset with more braking scenarios</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Combine throttle and brake as one command</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Draft PR for Behavior Metrics’ traffic generation feature</li>
+</ul>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="ImitationLearning" /><category term="BehaviorMetrics" /><summary type="html"><![CDATA[Refining obstacle avoidance with enriched data and exploring unified throttle-brake model output]]></summary></entry><entry><title type="html">Week 11: Aug 07 ~ Aug 13</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/" rel="alternate" type="text/html" title="Week 11: Aug 07 ~ Aug 13" /><published>2023-08-15T06:00:00-04:00</published><updated>2023-08-15T06:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week, our focus remained on enhancing our model’s performance, especially in the area of obstacle avoidance. Despite the agent’s attempts to decelerate when detecting a vehicle ahead, it doesn’t employ the brake efficiently, leading to frequent collisions. To address this, we adjusted the L1 loss used during training, giving more emphasis to braking than to throttle or steering. We also made progress in integrating traffic generation functionality within Behavior Metrics.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Adjust driving score weights</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Modify the L1 loss weights for training</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Adjust the model-autopilot driving balance for DAgger data collection</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Continue integration with Behavior Metrics platform</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="weighted-l1-score">Weighted L1 Score</h3>
+<p>Our primary concern is the agent’s inadequate braking response. The image below, showing ground truth versus model predictions on the validation set, underscores this deficiency. Note that the model’s predicted braking remains at zero regardless of the true label value, suggesting a failure to grasp appropriate braking instances.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/unweighted L1 loss.png" width="800" /></center>
+<p>Previously, our training has been using the L1 loss. In an effort to better capture braking nuances, we shifted to a weighted L1 loss, assigning weights of 2:1:5 to throttle, steering, and braking, respectively. The intention was to encourage the model to prioritize learning about braking. However, as shown below, this alteration had minimal impact on the model’s learning pattern.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/weighted L1 loss.png" width="800" /></center>
+
+<h3 id="other-ideas-auxiliary-tasks">Other Ideas: Auxiliary Tasks</h3>
+<p>As mentioned above, our effort to improve the model’s performance in obstacle avoidance by reweighing the L1 loss didn’t quite work. This persistent issue suggests that we may need to re-evaluate our data, consider other model architectures, or explore alternative training strategies. One of the ideas we have is to train with auxiliary tasks. Here are some auxiliary tasks we might consider:</p>
+<ul>
+  <li><strong>Braking Prediction</strong>: By making the model anticipate when it should brake, it could enhance its real-time braking responses.</li>
+  <li><strong>Obstacle Distance</strong> Estimation: Predicting the distance to the nearest obstacle could help in modulating speed and deciding when to brake.</li>
+  <li><strong>Speed Prediction</strong>: By predicting its next speed, the model might better adjust throttle and braking actions based on upcoming conditions.</li>
+</ul>
+
+<h3 id="traffic-generation-in-behavior-metrics">Traffic Generation in Behavior Metrics</h3>
+<p>The user can now specify the number of other vehicles and pedestrians while configuring for the scenario in Behavior Metrics using the yaml config file. An example showcased below demonstrates a scenario where the street is populated by other vehicles. Importantly, these vehicles are set in motion only once the user initiates the ‘start’ and will halt once the agent stops. Switching from asynchronous to synchronous mode in CARLA facilitates this synchronization. We will shortly open a PR for this feature, inviting feedback before finalizing the update.</p>
+<center><iframe src="https://drive.google.com/file/d/1KLEe_6CdB6pE0ndbEaZSgRp2orz6i8LZ/preview" width="560" height="400" allow="autoplay"></iframe></center>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="ImitationLearning" /><category term="BehaviorMetrics" /><summary type="html"><![CDATA[Exploring weighted L1 loss and integration with Behavior Metrics]]></summary></entry><entry><title type="html">Week 10: July 31 ~ Aug 06</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week10/" rel="alternate" type="text/html" title="Week 10: July 31 ~ Aug 06" /><published>2023-08-07T06:00:00-04:00</published><updated>2023-08-07T06:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week10</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week10/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>This week pivots towards furthur enhancing and evaluating the model. With the previously implemented evaluation metrics, we can now more thoroughly gauge our model’s performance. As the program enters its latter half, we would like to start transferring the work we have done so far to the <a href="https://jderobot.github.io/BehaviorMetrics/">Behavior Metrics</a> platform. Tailored for benchmarking autonomous driving models, this platform allows users to load their models into predefined scenarios and obtain a detailed performance metric report. Currently, the platform only supports the lane-following task, where the agent doesn’t have to deal with obstacles (other vehicles and pedestrians), intersections, or traffic lights. An immediate goal for this week is to expand Behavior Metrics by introducing traffic, thus making its environment more dynamic and realistic.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Release posts for weeks 7 and 8</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Update codebase</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Refine and assess model performance</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Begin integration with Behavior Metrics platform</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="model-evaluation">Model Evaluation</h3>
+<p>One intriguing finding from the evaluation is what appears to be an inverse relationship between success rate and the overall driving score.
+As shown in the image below, after five dagger iterations, the success rate is the highest but the overall driving score is the lowest.  Let’s dissect the potential rationale:</p>
+
+<p>The model is bad at obstacle avoidance. When the model strays from the designated path (for instance, by taking an incorrect turn), it invariably ends up with a subpar route completion score, denoted as \(R\). However, this deviation inadvertently minimizes its exposure to potential obstacles. On the contrary, when the agent actually drives all the way to the target location, it is more likely to collide with
+other vehicles, resulting in a significanlty lower infraction penalty score \(P\), contributing to a diminished overall driving score, \(PR\).</p>
+
+<p>Another issue is once a collision with a front vehicle occurs, the agent is likely to repeatedly bump into the same vehicle as they both move forward staying very closely to each other, causing the infraction penalty score to decrease <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week6">exponentially</a>.</p>
+<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v8_evaluation results.png" /></center>
+
+<h3 id="v824-demo">v8.2.4 Demo</h3>
+<p>As shown in the demo below, after five DAgger iterations, the agent is able to follow the lane and follow instructions to make turns without much trouble, but lacks in avoiding obstacles, which we will work on in the 
+upcoming weeks.</p>
+<center><iframe src="https://drive.google.com/file/d/1xAIVwNmU8DCRFAoRrKAMalsQsR66L7cK/preview" width="560" height="400" allow="autoplay"></iframe></center>
+
+<h3 id="traffic-generation-in-behavior-metrics">Traffic Generation in Behavior Metrics</h3>
+<p>This week, we began working on integrating traffic generation for CARLA tasks in Behavior Metrics. For updates on this, check the <a href="https://github.com/JdeRobot/BehaviorMetrics/issues/625">issue</a> we opened on the Behavior Metrics Github page.</p>
+
+<p>We had some difficulty with generating pedestrians. An issue arises with the <a href="https://github.com/deepsense-ai/carla-birdeye-view">carla-birdeye-view</a> dependency of Behavior Metrics. When this tool tries to create a bird’s eye view for pedestrians, it runs into a NaN error. This happens because the tool mistakenly identifies the AI controllers used by pedestrians as pedestrians themselves, leading to errors when it tries to read their bounding boxes. We’ve reported this on the carla-birdeye-view Github page.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Evaluation" /><category term="ImitationLearning" /><category term="BehaviorMetrics" /><summary type="html"><![CDATA[Diving into model evaluation and Behavior Metrics integration.]]></summary></entry><entry><title type="html">Week 9: July 24 ~ July 30</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/" rel="alternate" type="text/html" title="Week 9: July 24 ~ July 30" /><published>2023-07-31T04:39:00-04:00</published><updated>2023-07-31T04:39:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week9/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>This week, our focus was on enhancing the performance of the model, particularly in addressing a prevalent issue identified in the previous week: the model would suddenly halt and become stuck in a state, especially when it is crossing an intersection. We tackled this problem using two main approaches:</p>
 <ul>
   <li>Finetuning the model with more junction data.</li>
@@ -366,203 +435,4 @@ The table belows shows the mean distance traveled before collision in failed cas
 </video>
 
 <h2 id="references">References</h2>
-<p>[1] Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, &amp; Alexey Dosovitskiy. (2018). End-to-end Driving via Conditional Imitation Learning.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="ImitationLearning" /><category term="DataAugmentation" /><summary type="html"><![CDATA[Train lane follower that can make turns]]></summary></entry><entry><title type="html">Week 2: June 5 ~ June 11</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/" rel="alternate" type="text/html" title="Week 2: June 5 ~ June 11" /><published>2023-06-12T04:04:00-04:00</published><updated>2023-06-12T04:04:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week2/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>During Monday’s meeting, we discussed last week’s progress on developing the data collection tool and our initial analysis of the model, which was trained on the preliminary dataset. Nikhil highlighted an issue in my approach that I was using an array of semantic labels as the 4th channel to augment the RGB image data from the camera. He suggested a more effective method would be to transform these labels into RGB values, treating them in the same manner as the camera image for better feature learning.</p>
-
-<p>Data augmentation was another important aspect of imitation learning. Our last week’s model faced a challenge in self-correction: it would swiftly leave the lane if it deviated from the center, primarily because it was never exposed to situations where the expert demonstrates steering back from a drift. To improve this, we considered augmenting our dataset to include scenarios simulating recovery from disturbances. One potential solution involves applying an affine transformation to slightly shift the images left or right and adjust the steering values accordingly. This technique would expose the agent to scenarios where images are offset to one side and the steering angle is towards the opposite direction, thus teaching it how to auto-correct if it strays from the center of the lane.</p>
-
-<p>An alternative strategy involves the injection of temporally-correlated noise into the expert agent’s driving control commands. For instance, noise that prompts the car to drift to the left could be incorporated into the steering commands by the agent. While this combined signal is used for vehicle control, only the expert agent’s counteractive response to the drift-induced noise is recorded as a part of the dataset.</p>
-
-<p>Given time constraints, I could only experiment with the latter approach this week. But the good news is, it proved to be quite effective! For more details, refer to the Execution section.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Convert semantic segmentation from labels to RGB images</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Plot out predictions vs ground truth for model evaluation</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Perform data augmentation by applying custom transformations (Did noise injection instead)</li>
-</ul>
-
-<h2 id="execution">Execution</h2>
-
-<h3 id="bug-fixing">Bug Fixing</h3>
-<ul>
-  <li>One of the first steps taken was to convert semantic segmentation labels into RGB values, integrating the segmentation and camera image into a 6-channel model input.</li>
-  <li>There were instances in the previously collected data where the agent overstepped the target location slightly before executing a 180-degree turn. To counter this, I reduced the time step of the synchronous mode in CARLA and also manually sifted through the episodes by monitoring the data collection process.</li>
-  <li>There was an anomaly with the RGB images collected in the previous week. Each time step did not correctly update the images, leading to discrepancies between the synchronization of the RGB images and the semantic segmentation samples. This inconsistency stemmed from the data collector using the same reference, rather than saving a distinct copy of each camera frame.</li>
-</ul>
-
-<h3 id="noise-injection">Noise Injection</h3>
-<p>The image below shows a (half) period of sine wave injected to the steer commands from the expert agent. The agent is able to correct the drift caused by the noise by steering to the opposite direction.</p>
-
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/noise_injection.png" width="500" /></center>
-
-<p>As shown in the video below, the agent drifts a little bit to the left or right from time to time due to the injected noise but it is able to steer back to the center of the lane:</p>
-
-<video width="800" controls="">
-  <source src="/gsoc2023-Meiqi_Zhao/assets/video/noisy_data_collection-2023-06-11_23.52.06.mp4" type="video/mp4" />
-</video>
-
-<h3 id="demo">Demo</h3>
-
-<video width="800" controls="">
-  <source src="/gsoc2023-Meiqi_Zhao/assets/video/v4_demo.mp4" type="video/mp4" />
-</video>
-
-<h2 id="references">References</h2>
-<p>[1] Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, &amp; Alexey Dosovitskiy. (2018). End-to-end Driving via Conditional Imitation Learning.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="DataCollection" /><category term="ImitationLearning" /><category term="DataAugmentation" /><summary type="html"><![CDATA[Train a better model with noise-injected data]]></summary></entry><entry><title type="html">Week 1: May 29 ~ June 04</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week1/" rel="alternate" type="text/html" title="Week 1: May 29 ~ June 04" /><published>2023-05-29T13:17:00-04:00</published><updated>2023-05-29T13:17:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week1</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week1/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>The start of the official coding period for GSoC is here! In Monday’s meeting, we revisited the logistics and strategized the initial steps for implementing the data collection tool. Our approach is grounded in simplicity; we begin with basic scenarios and gradually integrate more complexity. Here are a few elementary scenarios we considered:</p>
-<ul>
-  <li>Straight routes with no intersections or turns, as marked by red, green, and blue arrows in the image below, where other vehicles serve as dynamic obstacles.</li>
-  <li>Straight routes with no intersections or turns, but with a traffic light and a pedestrian crossing.</li>
-  <li>Straight routes with no intersections or turns, but with a parked car partially obstructing the lane, demanding the ego vehicle to circumvent the obstacle without changing lanes.</li>
-</ul>
-
-<p>While we would like the route to be simple in the beginning, it is crucial to introduce dynamic obstacles proximate to the ego vehicle to foster its learning of obstacle avoidance. 
-In addition, we decided the implementation of the data collection tool should be an iterative process, allowing us to test the data samples at each stage with incrementally more sophisticated models.</p>
-
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/Town01_simple_routes.png" width="500" /></center>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Get started with the data collection tool and collect some sample data</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Delve into the simulator to understand how to configure sensors, extract data, and spawn pedestrians crossing roads</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Check out Deep Learning Studio[1] and review existing models</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Train a small model on simplest scenarios if time permits</li>
-</ul>
-
-<h2 id="execution">Execution</h2>
-
-<h3 id="data-collection-tool">Data Collection Tool</h3>
-
-<p>The first step of the execution was implementing a data collection tool. This tool randomly samples straight routes with no intersections from a list of start and target locations provided in a .txt file. For each episode, the program reloads the traffic, spawns the ego-vehicle at the start location, and utilizes CARLA’s <a href="https://carla.readthedocs.io/en/0.9.12/adv_agents/">BehaviorAgent</a> to drive it to the target location. For each frame, the RGB camera image, semantic segmentation, current speed measurement, and the controls (throttle, steer, brake) are recorded and saved in .pkl format.</p>
-
-<p>For sample data I collected 100 episodes, totalling ~32000 frames.</p>
-
-<h3 id="model">Model</h3>
-<p>Simultaneously, I explored the Deep Learning Studio[1] and reviewed several existing models. From this exploration, I modified the DeepestLSTMTinyPilotNet to accept a 4D image input (RGB+Segmentation) and concatenate the flattened features with the current speed measurement. The output of the model is a vector of (throttle, steer, brake).</p>
-
-<p>Below is the architecture of the modified DeepestLSTMTinyPilotNet:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>DeepestLSTMTinyPilotNet(
-  (cn_1): Conv2d(4, 8, kernel_size=(3, 3), stride=(2, 2))
-  (relu_1): ReLU()
-  (cn_2): Conv2d(8, 8, kernel_size=(3, 3), stride=(2, 2))
-  (relu_2): ReLU()
-  (cn_3): Conv2d(8, 8, kernel_size=(3, 3), stride=(2, 2))
-  (relu_3): ReLU()
-  (dropout_1): Dropout(p=0.2, inplace=False)
-  (clstm_n): ConvLSTM(
-    (cell_list): ModuleList(
-      (0): ConvLSTMCell(
-        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-      )
-      (1): ConvLSTMCell(
-        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-      )
-      (2): ConvLSTMCell(
-        (conv): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-      )
-    )
-  )
-  (fc_1): Linear(in_features=6721, out_features=50, bias=True)
-  (relu_fc_1): ReLU()
-  (fc_2): Linear(in_features=50, out_features=10, bias=True)
-  (relu_fc_2): ReLU()
-  (fc_3): Linear(in_features=10, out_features=3, bias=True)
-)
-</code></pre></div></div>
-<p>The figure below shows the training and validation loss over 100 epochs.</p>
-
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/DeepestLSTMTinyPilotNet_100epochs_loss.png" width="500" /></center>
-
-<h3 id="results">Results</h3>
-<p>I evaluated the performance of the model by deploying it in the CARLA simulator and observing its behavior. As shown in the video below, there are several problems: (1) the vehicle is hitting brake even when there is not obstacle in front of it (2) the vehicle steers to the left instead of driving a straight trajectory</p>
-
-<video width="800" controls="">
-  <source src="/gsoc2023-Meiqi_Zhao/assets/video/DeepestLSTMTinyPilotNetwork_100eopchs.mp4" type="video/mp4" />
-</video>
-
-<h2 id="references">References</h2>
-<p>[1] Deep Learning Studio: https://github.com/JdeRobot/DeepLearningStudio</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="DataCollection" /><category term="CARLA" /><category term="AutonomousDriving" /><category term="ImitationLearning" /><summary type="html"><![CDATA[implementation of data collection tool]]></summary></entry><entry><title type="html">Community Bonding: May 22 ~ May 28</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/" rel="alternate" type="text/html" title="Community Bonding: May 22 ~ May 28" /><published>2023-05-28T08:00:00-04:00</published><updated>2023-05-28T08:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community%20bonding%20week%202</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/"><![CDATA[<p>This week marked an intense dive into literature and codebases to unravel the mechanisms and best practices of data collection. In Monday’s meeting, we went over our findings from last week’s literature review on state-of-the-art imitation learning algorithms for autonomous driving and set goals for this week. The focus was to comprehend and dissect the data collection methodologies utilized in various research papers.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Detailed analysis of various research papers with a focus on their data collection methods.</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />(Partially Completed) Explore the corresponding codebases to gain a practical understanding of the implementation.</li>
-</ul>
-
-<h2 id="findings">Findings</h2>
-<p>This week, I revisited the work done by Codevilla et al.[1], Hesham et al.[2], Chen et al.[3] and went over their codebases to understand how data collection was implemented.</p>
-
-<h3 id="overall">Overall</h3>
-<ul>
-  <li><strong>Expert demonstration</strong>: Many works leverage CARLA’s built-in autopilot function to gather expert demonstrations for imitation learning. However, it is also possible to use a human driver’s input for a more realistic demonstration.</li>
-  <li><strong>Simulation environment</strong>: Usually in CARLA simulator, Town01 is used for training and Town02 is reserved for testing.</li>
-  <li><strong>Format</strong>: In our case, each episode should consist of a sequence of tuples of (RGB image, semantic segmentation, measurements, control commands)</li>
-  <li><strong>Data variability</strong>: To improve the robustness of the learned policy, the data collected should cover various driving conditions including different weather conditions, traffic densities, and times of the day.</li>
-  <li><strong>Data Augmentation</strong>: This technique enriches the training set by simulating ‘imperfect’ scenarios and applying random transformations to each image during training, enhancing the model’s ability to handle diverse situations.</li>
-  <li><strong>Action Space</strong>: Depending on the work, it can include the steering angle, the acceleration, the braking amount, or even high-level commands like ‘turn left’, ‘turn right’, ‘go straight’, etc.
-    <ul>
-      <li><strong>Route Planning</strong>: If high-level commands are used to determine the direction of the vehicle at intersections, a navigator/planner could be used to derive the current high-level command for each frame. However, in our case, we would want to start small with routes that doesn’t contain intersections.</li>
-    </ul>
-  </li>
-  <li><strong>Episode Duration</strong>: Each episode should be long enough to contain meaningful driving behaviour but short enough to fit into the memory. It is common to set a maximum number of frames (e.g. 5,000) per episode.</li>
-</ul>
-
-<h3 id="data-augmentation">Data Augmentation</h3>
-<p>In my literature review, I found that many papers, including the two other papers listed, adopted the data augmentation practices introduced by Codevilla et al. These practices focus on two main aspects:</p>
-
-<ul>
-  <li>
-    <p>Addressing the lack of ‘imperfect’ scenarios in the training data: As the training data typically lacks demonstrations of the agent recovering from non-ideal situations, it’s necessary to augment the data with such instances. This can be achieved by injecting temporally correlated noise into the expert’s driving commands during data collection. This simulates gradual deviation from the correct path and abrupt disturbances. However, only the expert driver’s actual control commands are used in the training data.</p>
-  </li>
-  <li>
-    <p>Applying random transformations to each image during training: These transformations include adjusting the image’s contrast and brightness, adding Gaussian and salt-and-pepper noise, and introducing region dropout by masking a small section of the image black.</p>
-  </li>
-</ul>
-
-<p>Note that some transformations such as tranlation or ratation should not be applied, as the control commands are not invariant of these transformations.</p>
-
-<h3 id="data-storage">Data Storage</h3>
-<p>Below are a few commonly-used data storage paradigms:</p>
-<ul>
-  <li><strong>Images &amp; json files</strong>: RGB and semantic segmentation images can be stored as standard image files. JSON files can hold associated metadata for each frame such as well as the control commands and measurements. This format is human-readable and easily manipulated but may be slower to read/write in large quantities.</li>
-  <li><strong>Pickle</strong>: This is a Python-specific binary serialization format. Objects can be directly serialized and deserialized to and from byte streams, which makes storing complex objects convenient. However, it may not be suitable for very large datasets due to memory constraints.</li>
-  <li><strong>LMDB</strong>: This is a fast, memory-efficient database library. It can be used to store large amounts of data without loading the entire database into memory. This can greatly accelerate data retrieval and is especially useful for larger datasets.</li>
-</ul>
-
-<h3 id="useful-tools">Useful Tools</h3>
-<p>There are some existing tools that can be mofidied to suit our needs or used as reference:</p>
-<ul>
-  <li><strong>Carla Data Collector</strong>(version 0.8.4): This tool allows the user to configure a dataset configuration file that contains a set of start/target positions, sensor settings, traffic settings etc. to generate a set of eepisodes from an expert demonstrator.</li>
-  <li><strong>Carla Driving Benchmark</strong>(version 0.8.4): This library provides a planner that uses a graph based approach and A* algorithm to find a path from the start location to the target location. It convieniently allows querying the high-level command at the current position.</li>
-</ul>
-
-<h3 id="next-steps">Next Steps</h3>
-<p>The plan is to incrementally increase the complexity of the scenarios from which we collect data. This approach ensures the fundamentals are in place before we dive into more advanced setups. Here’s an outline:</p>
-
-<ul>
-  <li>
-    <p><strong>Non-Intersection Lane Following with a Stationary Obstacle</strong>: Begin with the simplest case: collect data where the agent doesn’t encounter any intersections and only needs to follow the current lane, with one parked vehicle on its path. This will give us a feel for the data collection process, and help us understand the interaction between the agent and static objects in the environment.</p>
-  </li>
-  <li>
-    <p><strong>Non-Intersection Lane Following with Dynamic Traffic</strong>: Once we are comfortable with the basic data collection process, add more complexity by including moving cars on the map. This will give us a deeper understanding of how to handle dynamic objects in the environment.</p>
-  </li>
-  <li>
-    <p><strong>Right Turn Only at Intersections</strong>: With a solid understanding of data collection in simple non-intersection scenarios, we can then proceed to collect episodes where the agent only needs to turn right at intersections to arrive at the target location. This will bring into play the complexities of intersection navigation and multi-lane traffic.</p>
-  </li>
-  <li>
-    <p><strong>Conditional Imitation Learning</strong>: Finally, we can try to collect data in a way that matches the Conditional Imitation Learning paper, i.e., also record high-level commands like TURN_LEFT, TURN_RIGHT, GO_STRAIGHT, FOLLOW, etc. This will complete our imitation learning data collection procedure and lay a solid foundation for our following training and evaluation stages.</p>
-  </li>
-</ul>
-
-<h2 id="references">References</h2>
-<p>[1] Codevilla, Felipe et al. “End-to-End Driving Via Conditional Imitation Learning.” 2018 IEEE International Conference on Robotics and Automation (ICRA) (2017): 1-9.</p>
-
-<p>[2] Hesham M. Eraqi, Mohamed N. Moustafa, Jens Honer. Dynamic Conditional Imitation Learning for Autonomous Driving. IEEE Transactions on Intelligent Transportation Systems (ISSN: 1524-9050, Online ISSN: 1558-0016). Issue 12, Vol 23, Pages 22988-23001. DOI: 10.1109/TITS.2022.3214079, December 2022. [Impact Factor: 9.551]</p>
-
-<p>[3] Chen, Dian et al. “Learning by Cheating.” Conference on Robot Learning (CoRL). 2019.</p>
-
-<p>[4] Carla Data Collector: https://github.com/carla-simulator/data-collector/tree/master</p>
-
-<p>[5] Carla Driving Benchmark: https://github.com/carla-simulator/driving-benchmarks/tree/master</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="LiteratureResearch" /><category term="DataCollection" /><category term="CARLA" /><category term="AutonomousDriving" /><summary type="html"><![CDATA[second week of the community bonding period; research data collection methods]]></summary></entry></feed>
+<p>[1] Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, &amp; Alexey Dosovitskiy. (2018). End-to-end Driving via Conditional Imitation Learning.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="ImitationLearning" /><category term="DataAugmentation" /><summary type="html"><![CDATA[Train lane follower that can make turns]]></summary></entry></feed>
