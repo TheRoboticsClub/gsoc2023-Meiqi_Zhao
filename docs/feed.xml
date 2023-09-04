@@ -1,16 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-08-15T13:10:19-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 12: Aug 14 ~ Aug 20</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/" rel="alternate" type="text/html" title="Week 12: Aug 14 ~ Aug 20" /><published>2023-08-15T08:49:00-04:00</published><updated>2023-08-15T08:49:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>This week, we revisited the challenge of improving our model’s obstacle avoidance. Our prior effort with a weighted L1 loss showed limited progress. The prevailing issue is the model fails to learn to use the brake at all. This week we would like to explore other approaches. One approach involves expanding the dataset with more braking scenarios. We hypothesize that a dataset enriched with varied braking examples might guide the model towards better braking responses. We also plan to experiment with combining the throttle and brake as one model output. At present, our model produces three separate outputs for throttle, steering, and braking, all ranging between [0, 1]. However, a practical observation is that increasing throttle often corresponds with decreased braking, and vice versa. By combining throttle and brake into a single output, we aim to improve the obstacle avoidance capabilities of our model.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-09-03T22:29:48-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">Week 12~13: Aug 14 ~ Aug 27</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/" rel="alternate" type="text/html" title="Week 12~13: Aug 14 ~ Aug 27" /><published>2023-08-15T08:49:00-04:00</published><updated>2023-08-15T08:49:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week12/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>I have been sick recently so this post briefs the work done from Aug 14 to Aug 27 in the span of two weeks. In the past two weeks, we revisited the challenge of improving our model’s obstacle avoidance. Our prior effort with a weighted L1 loss showed limited progress. The prevailing issue is the model fails to learn to use the brake at all. This week we would like to explore other approaches. One approach involves expanding the dataset with more braking scenarios. We hypothesize that a dataset enriched with varied braking examples might guide the model towards better braking responses. We also plan to experiment with combining the throttle and brake as one model output. At present, our model produces three separate outputs for throttle, steering, and braking, all ranging between [0, 1]. However, a practical observation is that increasing throttle often corresponds with decreased braking, and vice versa. By combining throttle and brake into a single output, we aim to improve the obstacle avoidance capabilities of our model.</p>
 
 <p>Simultaneously, we’re progressing with our Behavior Metrics integration. A priority is to draft a PR for our recently developed traffic generation feature, inviting mentor feedback. Furthermore, if time allows, we hope to lay groundwork for loading our model within Behavior Metrics.</p>
 
-<h2 id="objectives-as-of-aug-15">Objectives (As of Aug 15)</h2>
+<h2 id="objectives">Objectives</h2>
 <ul class="task-list">
   <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Release posts for weeks 10 and 11</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Expand dataset with more braking scenarios</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Combine throttle and brake as one command</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Draft PR for Behavior Metrics’ traffic generation feature</li>
-</ul>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="ImitationLearning" /><category term="BehaviorMetrics" /><summary type="html"><![CDATA[Refining obstacle avoidance with enriched data and exploring unified throttle-brake model output]]></summary></entry><entry><title type="html">Week 11: Aug 07 ~ Aug 13</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/" rel="alternate" type="text/html" title="Week 11: Aug 07 ~ Aug 13" /><published>2023-08-15T06:00:00-04:00</published><updated>2023-08-15T06:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Expand dataset with more braking scenarios</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Combine throttle and brake as one command</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Draft PR for Behavior Metrics’ traffic generation feature</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="dataset-with-balanced-throttling--braking">Dataset with Balanced Throttling &amp; Braking</h3>
+<p>In <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">week 8</a>, we decided to trim the dataset by removing the stationary frames where the vehicle is just waiting in line at a red traffic light. The goal was to make the dataset more compact and consists of only “effective” data, which proved to be a wrong decison. As shown in the left image below, the vehicle is not using the brake (brake = 0) at all in most of the frames from the dataset. The right image shows that after we add more braking data, the amount of time the vehicle is braking vs not braking is roughly balanced.</p>
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/brake_dataset_before_vs_after.png" width="800" />
+  <figcaption>Before (left) and after (right) adding more braking data</figcaption>
+  </center> 
+</figure>
+
+<p>After including more braking data in the dataset, we evaluated the model by plotting out the predictions vs ground truth on the training set. As shown in the image blow, the model appears to have learned throttle and steer relatively well yet still struggles with brake. This corroborates with our observation that the model does loose throttle when there is obstacle ahead, but it often fails to utilize the brake. In the Evaluation Results section below, we conduct a more thorough evaluation on the performance of the model.</p>
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/balanced_dataset_predictions.png" width="800" />
+  </center> 
+</figure>
+
+<h3 id="combining-thorttle--brake-control">Combining Thorttle &amp; Brake Control</h3>
+<p>Currently our model outputs three vehicle control commands: throttle, steer, and brake. Since the model has not been utilizing the brake after training, we decided to experiment on combining the throttle and brake into one command. Intuitively, the vehicle should either be braking or throttling and not both at the same time. We modify the model such that it outputs two values between [0, 1], one for throttle/brake, and one for steer. For the throttle/brake command, we threshold it at 0.5 such that if it’s above the threshold, the vehivle hits thorttle, and vice versa.</p>
+
+<p>\(throttle = (combined\_control - 0.5) / 0.5 \quad \text{if combined_control &gt;= 0.5}\)
+\(brake = (0.5 - combined\_control) / 0.5 \quad \text{if combined_control &lt;0.5}\)</p>
+
+<p>As shown in the image below, the model has learned brake well as most predictions are close to the ground truth. However, it still tends to over-use the throttle and under-utilize the brake.</p>
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/combined_control_predictions.png" width="700" />
+  </center> 
+</figure>
+
+<h3 id="evaluation-results">Evaluation Results</h3>
+<p>We compare the following models:</p>
+<ol>
+  <li><strong>Unbalanced Dataset</strong>: model from our last iteration that was trained on an unbalanced dataset</li>
+  <li><strong>Balanced Dataset</strong>: same as 1 except the brake values in dataset is balanced</li>
+  <li><strong>Balanced Dataset + Additional Junction Data</strong>: same as 2 except with 50 additional episodes of the expert agent crossing a junction</li>
+  <li><strong>Balanced Dataset + Combined Control</strong>: combines throttle and brake into a single command</li>
+  <li><strong>Balanced Dataset + Combined Control + Additional Junction Data</strong>: same as 4 except with 50 additional episodes of the expert agent crossing a junction</li>
+</ol>
+<center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/v9_evaluation results.png" width="800" />
+  </center>
+<p>From the evaluation results above, we make the following observations:</p>
+<ul>
+  <li>Compared to the model trained on the unbalanced dataset, the models trained on balanced dataset are better at obstacle avoidance in terms of decreased nubmer of collisions with other vehicles.</li>
+  <li>Despite the improved performance in obstacle avoidance, the overall success rate decreased drastically. Specifically, the new models frequently get stuck in a state and time out eventually. This might be because the model is being overly cautious and drives too slowly overall. The agent might be over-predicting the necessity to brake due to ambiguous situations or over-representing the braking action in the dataset.</li>
+  <li>Counterintuitively, the additional 50 episodes of “junction data” doesn’t improve the learning. Notably, the number of collisions increased significantly (model 3 verus 2, 5 verus 4). It’s possible that the behavior in the junctions is conflicting with behavior in other parts of the driving task. This can lead to situations where the agent is confused about which behavior to imitate.</li>
+</ul>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="ImitationLearning" /><category term="BehaviorMetrics" /><summary type="html"><![CDATA[Training with balanced data and exploring combined throttle-brake model output]]></summary></entry><entry><title type="html">Week 11: Aug 07 ~ Aug 13</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/" rel="alternate" type="text/html" title="Week 11: Aug 07 ~ Aug 13" /><published>2023-08-15T06:00:00-04:00</published><updated>2023-08-15T06:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week11/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>This week, our focus remained on enhancing our model’s performance, especially in the area of obstacle avoidance. Despite the agent’s attempts to decelerate when detecting a vehicle ahead, it doesn’t employ the brake efficiently, leading to frequent collisions. To address this, we adjusted the L1 loss used during training, giving more emphasis to braking than to throttle or steering. We also made progress in integrating traffic generation functionality within Behavior Metrics.</p>
 
 <h2 id="objectives">Objectives</h2>
@@ -136,7 +185,7 @@ evaluate the model, we developed a mechanism to accumulately calculate the angle
 <h3 id="efficient-data-collection">Efficient data collection</h3>
 <p>The solution to most problems in the realm of machine learning lies in more data. In research settings, autonomous driving tasks often require dozens to hundreds of hours of driving data. Given computational limitations, we’re currently collecting under 100 episodes of training data in the CARLA simulator, amassing a few hours of driving at most. Therefore, we need to make our data collection process as efficient and effective as possible. This week, we explored the following ways to optimize data collection:</p>
 <ul>
-  <li><strong>Data Trimming</strong>: A typical episode in the training set usually involves the agent waiting at the intersection for a long time. We removed segments where the vehicle stops and the throttle remains below 0.01 after more than 50 frames. This step helps eliminate redundant data and increases the effectiveness of our dataset.</li>
+  <li><strong>Data Trimming</strong>: A typical episode in the training set usually involves the agent waiting at the intersection for a long time. We removed segments where the vehicle stops and the throttle remains below 0.01 after more than 50 frames. This step helps eliminate redundant data and increases the effectiveness of our dataset. (<strong>Update: NOT a good idea</strong>, see <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week12">week 12</a>)</li>
   <li><strong>Data prioritization</strong>: Certain tasks, such as making turns at intersections and obstacle avoidance, are more complex and crucial. Therefore, we should prioritize these scenarios in our data collection.</li>
   <li><strong>Selective Data Retention</strong>: After the initial training, we can analyze the scenarios where the model underperforms, and focus on collecting and retaining more data that reflects these scenarios.</li>
 </ul>

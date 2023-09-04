@@ -162,7 +162,7 @@
 <p>The solution to most problems in the realm of machine learning lies in more data. In research settings, autonomous driving tasks often require dozens to hundreds of hours of driving data. Given computational limitations, we’re currently collecting under 100 episodes of training data in the CARLA simulator, amassing a few hours of driving at most. Therefore, we need to make our data collection process as efficient and effective as possible. This week, we explored the following ways to optimize data collection:</p>
 <ul>
   <li>
-<strong>Data Trimming</strong>: A typical episode in the training set usually involves the agent waiting at the intersection for a long time. We removed segments where the vehicle stops and the throttle remains below 0.01 after more than 50 frames. This step helps eliminate redundant data and increases the effectiveness of our dataset.</li>
+<strong>Data Trimming</strong>: A typical episode in the training set usually involves the agent waiting at the intersection for a long time. We removed segments where the vehicle stops and the throttle remains below 0.01 after more than 50 frames. This step helps eliminate redundant data and increases the effectiveness of our dataset. (<strong>Update: NOT a good idea</strong>, see <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week12">week 12</a>)</li>
   <li>
 <strong>Data prioritization</strong>: Certain tasks, such as making turns at intersections and obstacle avoidance, are more complex and crucial. Therefore, we should prioritize these scenarios in our data collection.</li>
   <li>
@@ -229,13 +229,13 @@
   
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/">Community Bonding: May 22 ~ May 28</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week12/">Week 12~13: Aug 14 ~ Aug 27</a>
   </li>
 
   
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week5/">Week 5: June 26 ~ July 02</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/">Community Bonding: May 22 ~ May 28</a>
   </li>
 
   
