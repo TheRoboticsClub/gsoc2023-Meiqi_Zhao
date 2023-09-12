@@ -10,9 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Week 5: June 26 ~ July 02 | Meiqi Zhao | JdeRobot x GSoC2023</title>
+    <title>Week 14: Aug 28 ~ Sep 3 | Meiqi Zhao | JdeRobot x GSoC2023</title>
     <meta name="author" content="JdeRobot x Google Summer of Code 2023">
-    <meta name="description" content="Enhancing agent's traffic light adherence">
+    <meta name="description" content="Behavior Metrics Model Integration">
     <meta name="keywords" content="jekyll, jekyll-theme, academic-website, portfolio-website">
 
 
@@ -38,7 +38,7 @@
     <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%E2%9A%9B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
     
     <link rel="stylesheet" href="/gsoc2023-Meiqi_Zhao/assets/css/main.css">
-    <link rel="canonical" href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/">
+    <link rel="canonical" href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week14/">
 
     <!-- Dark Mode -->
     
@@ -121,23 +121,19 @@
 <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">Week 5: June 26 ~ July 02</h1>
-    <p class="post-meta">July 9, 2023</p>
+    <h1 class="post-title">Week 14: Aug 28 ~ Sep 3</h1>
+    <p class="post-meta">September 3, 2023</p>
     <p class="post-tags">
       <a href="/gsoc2023-Meiqi_Zhao/blog/2023"> <i class="fas fa-calendar fa-sm"></i> 2023 </a>
         ·  
         <a href="/gsoc2023-Meiqi_Zhao/blog/tag/imitationlearning">
           <i class="fas fa-hashtag fa-sm"></i> ImitationLearning</a>  
+          <a href="/gsoc2023-Meiqi_Zhao/blog/tag/behaviormetrics">
+          <i class="fas fa-hashtag fa-sm"></i> BehaviorMetrics</a>  
           
         ·  
         <a href="/gsoc2023-Meiqi_Zhao/blog/category/weeklyupdates">
           <i class="fas fa-tag fa-sm"></i> WeeklyUpdates</a>  
-          <a href="/gsoc2023-Meiqi_Zhao/blog/category/coding">
-          <i class="fas fa-tag fa-sm"></i> Coding</a>  
-          <a href="/gsoc2023-Meiqi_Zhao/blog/category/training">
-          <i class="fas fa-tag fa-sm"></i> Training</a>  
-          <a href="/gsoc2023-Meiqi_Zhao/blog/category/evaluation">
-          <i class="fas fa-tag fa-sm"></i> Evaluation</a>  
           
 
     </p>
@@ -147,58 +143,56 @@
     
     <div id="markdown-content">
       <h2 id="preliminaries">Preliminaries</h2>
-<p>Our current model employs an embedding layer to process the high-level commands, which are then concatenated with the flattened visual features. However, given that we only have four discrete high-level commands, the use of an embedding layer might be overcomplicated for our scenario. Therefore, we plan to experiment with one-hot encoding for these high-level commands this week.</p>
-
-<p>Until now, our model has ignored traffic lights as the expert agent was configured to do so during data collection. However, we believe incorporating traffic light status as an additional input to our model would make our agent more compliant with real-world traffic regulations.</p>
-
-<p>With the approaching midterm evaluation and the significant progress we’ve made so far, we are also considering creating a demo video of our work. We aim to showcase our advancements on our <a href="https://www.youtube.com/@jderobot/videos" rel="external nofollow noopener" target="_blank">Youtube Channel</a>. Moreover, we plan to update our code repository and compose a comprehensive README to provide better guidance for those interested in our project.
-and write a README.</p>
+<p>This week our primary goal was to integrate our current model into Behavior Metrics, completing the entire pipeline for the project. Additionally, we expanded our dataset by training the model on 160 episodes, up from the previous 80. While this typically augments learning, our evaluation results indicated marginal improvements from our prior model.</p>
 
 <h2 id="objectives">Objectives</h2>
 <ul class="task-list">
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled checked>Replace the embedding layer for high-level commands with one-hot encoding</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Update traffic generation PR</li>
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled checked>Introduce traffic light status as an additional input to the model</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Add more data</li>
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled checked>Write a README for repository</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled checked>Add model as new brain in Behavior Metrics</li>
   <li class="task-list-item">
-<input type="checkbox" class="task-list-item-checkbox" disabled checked>Produce a demo video for the JdeRobot Youtube Channel</li>
+<input type="checkbox" class="task-list-item-checkbox" disabled>Include more information in evaluation results (e.g. collision per km)</li>
 </ul>
 
 <h2 id="execution">Execution</h2>
+<h3 id="training-on-a-larger-dataset">Training on a larger dataset</h3>
+<p>More data usually improves learning. This week we increased the dataset to twice the size. Below is the evaluation results for 50 testing episodes. Notably, there wasn’t a significant improvement in terms of overall driving score and succss rate compared to the previous <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week12">combined control model</a> models.</p>
+<ul>
+  <li>Driving Score: 0.54</li>
+  <li>Success Rate: 0.36</li>
+  <li>Weighted Success Rate: 0.47</li>
+  <li>Infractions:
+    <ul>
+      <li>Wrong Turn: 18</li>
+      <li>Red Light: 1</li>
+      <li>Collision w/ Other Vehicle: 10</li>
+      <li>Collision w/ Other: 40</li>
+      <li>Junction Time Out: 10</li>
+      <li>Non-junction Time Out: 4
+Below are two video demonstrations - one showcasing a successful run, and the other detailing a failed attempt.</li>
+    </ul>
+  </li>
+</ul>
+<center><iframe src="https://drive.google.com/file/d/1C7SDTad4M72MQMx6W3oEu9-BcTQebZYG/preview" width="640" height="480" allow="autoplay"></iframe></center>
+<center><iframe src="https://drive.google.com/file/d/1vj7rj2n1WQxRpbEV99RFcPgv1PDRmnTl/preview" width="640" height="480" allow="autoplay"></iframe></center>
 
-<h3 id="one-hot-encoding-for-high-level-command">One-Hot Encoding for High-Level Command</h3>
-<p>Below is the diagram illustrating the revised model architecture which now processes high-level commands using one-hot encoding. Surprisingly, this adjustment seems to have negatively impacted the model’s performance. The agent now occasionally collides with static objects while executing a turn. This suggests that the agent, using the one-hot encoded commands, hasn’t learned the task of making turns as effectively as it did when the embedding layer was used. This result is counterintuitive, given that one-hot encoding generally presents simpler, more explicit information for the model to learn, thus eliminating the need for the model to learn the weights for an embedding layer.</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v6.3_model%20architecture.png" width="600"></center>
-<iframe src="https://drive.google.com/file/d/1U2huVDduwzhtiGYpthJKDAlwDJUTX74g/preview" width="800" height="450" allow="autoplay"></iframe>
-
-<h3 id="transition-to-carla-0914">Transition to CARLA 0.9.14</h3>
-<p>This week, we also initiated the transition from CARLA 0.9.13 to 0.9.14. The main motivations for this change were as follows:</p>
+<h3 id="behavior-metrics-integration">Behavior Metrics integration</h3>
+<p>This week, This week the bulk of the work lies on adding our segmentation-based imitation learning model to BehaviorMetrics as a new brain. Specifically, we added the model as a new brain in Behavior Metrics and the required utilities. 
+A <a href="https://github.com/JdeRobot/BehaviorMetrics/pull/632" rel="external nofollow noopener" target="_blank">PR</a> has been created to reflect the following changes:</p>
 
 <ul>
-  <li>In CARLA 0.9.14, we can set the target speed of an autopilot agent via the Traffic Manager, thus allowing us to maintain a constant speed for the expert agent.</li>
-  <li>CARLA 0.9.14 allows for differentiation between various types of vehicles through semantic segmentation.</li>
-  <li>In the latest version, we can retrieve the traffic light status for each frame.</li>
+  <li>Added new yaml file, launch file, and object file as example</li>
+  <li>Added new brain for loading imitation learning pytorch models</li>
+  <li>Added ir_models directory for storing models</li>
+  <li>Added utils function for running imitation learning models</li>
+  <li>Added PilotNetOneHot model architecture implementation</li>
 </ul>
 
-<p>However, this transition wasn’t entirely smooth. An issue we ran into was that CARLA updated its semantic segmentation labels in version 0.9.14 to align with the Cityscape dataset. Consequently, our older models, for which data was collected from version 0.9.13, can no longer be used for evaluation moving forward.</p>
-
-<h3 id="traffic-light-status-as-model-input">Traffic Light Status As Model Input</h3>
-<p>The image below illustrates the architecture where we’ve added traffic light status as an additional input modality. The status of the traffic light can take one of four discrete values, encoded using one-hot encoding:</p>
-<ul>
-  <li>
-<strong>0</strong> Not at traffic light</li>
-  <li>
-<strong>1</strong> Red</li>
-  <li>
-<strong>2</strong> Green</li>
-  <li>
-<strong>3</strong> Yellow</li>
-</ul>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v6.4_model%20architecture.png" width="600"></center>
-<p>As can be seen in the video below, the model learns to stop at traffic lights. Please note that the video demonstrates successful cases primarily. The overall performance of the model, however, is not yet optimal, as it frequently runs red lights. We will continuously workto improve this aspect and to make our model more accurate in responding to traffic signals.</p>
-<iframe src="https://drive.google.com/file/d/1Bv1x-BFap-OQSNPYq4br505vj7F-7nJG/preview" width="800" height="450" allow="autoplay"></iframe>
+<p>The following is a demonstration where our model gets loaded into Behavior Metrics:</p>
+<center><iframe src="https://drive.google.com/file/d/1MxEEB3-spMUPww_hC-CP0jREBPsqShzV/preview" width="640" height="480" allow="autoplay"></iframe></center>
 
     </div>
   </article>
@@ -217,13 +211,7 @@ and write a README.</p>
   
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week4/">Week 4: June 19 ~ June 25</a>
-  </li>
-
-  
-
-  <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week3/">Week 3: June 12 ~ June 18</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week12/">Week 12~13: Aug 14 ~ Aug 27</a>
   </li>
 
   
@@ -235,13 +223,19 @@ and write a README.</p>
   
 
   <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/">Community Bonding: May 22 ~ May 28</a>
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week15/">Week 15: Sep 4 ~ Sep 10</a>
   </li>
 
   
 
   <li class="my-2">
     <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week6/">Week 6: July 03 ~ July 09</a>
+  </li>
+
+  
+
+  <li class="my-2">
+    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="/gsoc2023-Meiqi_Zhao/blog/2023/week3/">Week 3: June 12 ~ June 18</a>
   </li>
 
 </div>
