@@ -1,5 +1,154 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-09-12T08:55:58-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-</subtitle><entry><title type="html">Week 15: Sep 4 ~ Sep 10</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15/" rel="alternate" type="text/html" title="Week 15: Sep 4 ~ Sep 10" /><published>2023-09-12T03:32:00-04:00</published><updated>2023-09-12T03:32:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/" rel="alternate" type="text/html" hreflang="en" /><updated>2023-10-09T08:49:33-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/feed.xml</id><title type="html">Meiqi Zhao | JdeRobot x GSoC2023</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+</subtitle><entry><title type="html">GSoC 2023: Project Recap</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week18/" rel="alternate" type="text/html" title="GSoC 2023: Project Recap" /><published>2023-10-08T04:00:00-04:00</published><updated>2023-10-08T04:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week18</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week18/"><![CDATA[<h2 id="summary">Summary</h2>
+<p>The past 18 weeks have been an incredible journey filled with learning, challenges, and achievements. In the initial phase, we successfully trained an autonomous driving agent that exhibited obstacle avoidance skills and could follow a predefined route while responding to high-level turning commands. This agent was built using imitation learning and deep neural networks. During the latter part of the program, our focus shifted to expanding the capabilities of Behavior Metrics. We introduced support for generating traffic, allowing users to configure scenarios with other vehicles and pedestrians. Additionally, we added a new follow-route task, enabling agents to follow predefined routes involving various turns and junctions. To accurately evaluate the performance of agents in these new scenarios, we designed and implemented new evaluation metrics. These metrics included route completion ratios, success rates, weighted success rates, and detailed infraction tracking, providing a comprehensive assessment of agent performance.</p>
+
+<p>None of this would have been possible without the guidance and support of my mentors, Sergio Paniego Blanco and Nikhil Paliwal, whose expertise and dedication were invaluable throughout this journey. I’d also like to express my gratitude to Jose Maria Canas for his insightful contributions.Thank you to Google for organizing GSoC, and to everyone who has been a part of this journey!</p>
+
+<p>Below is a brief overview of the work completed.</p>
+
+<h2 id="code">Code</h2>
+
+<h3 id="codebases">Codebases</h3>
+<ul>
+  <li><a href="https://github.com/TheRoboticsClub/gsoc2023-Meiqi_Zhao">Segmentation-based End-to-End Imitation Learning for Autonomous Driving</a></li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics">Behavior Metrics</a></li>
+</ul>
+
+<h3 id="issues">Issues</h3>
+<ul>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/issues/603">#603</a> Add a launch for Town 01 with parked vehicles</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/issues/613">#613</a> Town01 scenario with dynamic objects</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/issues/625">#625</a> Generate traffic using CARLA Python API</li>
+</ul>
+
+<h3 id="pull-requests">Pull Requests</h3>
+<ul>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/606">#606</a> new launch file for Town01 with a stopped car</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/620">#620</a> added on npc vehicle with ad agent</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/626">#626</a> generate traffic</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/627">#627</a> Update instructions on installing carla-birdeye-view</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/632">#632</a> Added segmentation based imitation learning model as a new brain</li>
+  <li><a href="https://github.com/JdeRobot/BehaviorMetrics/pull/643">#643</a> Add support for a new follow-route task and evaluation metrics</li>
+</ul>
+
+<h2 id="weekly-progress">Weekly Progress</h2>
+<h3 id="week-17"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week17">Week 17</a></h3>
+<p>In Week 17, the main focus was on expanding the evaluation metrics in Behavior Metrics to accommodate the new “follow-route” task.</p>
+
+<h3 id="week-16"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week16">Week 16</a></h3>
+<p>In Week 16, the primary focus was on developing Behavior Metrics. Specifically, the team worked on implementing the new “follow-route” task in Behavior Metrics.</p>
+
+<h3 id="week-15"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week15">Week 15</a></h3>
+<p>During Week 15, the focus was on improving model performance by experimenting with different architectures. Simultaneously, work continued on expanding Behavior Metrics by introducing user customization for different task types and integrating additional evaluation metrics.</p>
+
+<h3 id="week-14"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week14">Week 14</a></h3>
+<p>During Week 14, the primary focus was on integrating the current model into Behavior Metrics to complete the project pipeline. The model was successfully added as a new brain in Behavior Metrics, enabling its use within the platform.</p>
+
+<h3 id="week-12--13"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week12">Week 12 &amp; 13</a></h3>
+<p>During Weeks 12 and 13, there was a focus on improving the model’s obstacle avoidance capabilities.</p>
+
+<h3 id="week-11"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week11">Week 11</a></h3>
+<p>In Week 11, efforts to enhance the model’s performance, particularly in obstacle avoidance, continued. Additionally, progress was made in integrating traffic generation functionality into the Behavior Metrics platform.</p>
+
+<h3 id="week-10"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week10">Week 10</a></h3>
+<p>In Week 10, the focus shifted towards refining and evaluating the model’s performance. Efforts also began to integrate the model into the Behavior Metrics platform, expanding its capabilities to include traffic.</p>
+
+<h3 id="week-9"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week9">Week 9</a></h3>
+<p>In Week 9, we implemented Data Aggregation (DAgger) to iteratively enhance the model’s behavior and refined the evaluation metrics to detect whether the model correctly follows turning instructions.</p>
+
+<h3 id="week-8"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">Week 8</a></h3>
+<p>In Week 8, we continued to address the “halting” problem encountered in the model, particularly when making turns at intersections. The team explored various strategies to optimize data collection, including data trimming and prioritization.</p>
+
+<h3 id="week-7"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week7">Week 7</a></h3>
+<p>In Week 7, the focus was on enhancing the model’s performance, particularly addressing the “halting” problem where the agent occasionally stops and gets stuck during navigation.</p>
+
+<h3 id="week-6"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week6">Week 6</a></h3>
+<p>In Week 6, the main focus was on enhancing the evaluation process by incorporating more sophisticated metrics inspired by the CARLA Leaderboard.</p>
+
+<h3 id="week-5"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week5">Week 5</a></h3>
+<p>In Week 5, the primary focus was on refining the model’s adherence to traffic lights by incorporating traffic light status as an additional input and experimenting with one-hot encoding for high-level commands.</p>
+
+<h3 id="week-4"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week4">Week 4</a></h3>
+<p>This week, efforts were focused on enhancing the model’s ability to make turns at intersections in any direction by incorporating high-level commands. Data collection was adjusted to record these commands, and the model architecture was updated to accommodate them.</p>
+
+<h3 id="week-3"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week3">Week 3</a></h3>
+<p>This week, the focus was on improving the versatility of the lane-following model by enabling it to navigate routes with turns and intersections.</p>
+
+<h3 id="week-2"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week2">Week 2</a></h3>
+<p>In the second week of coding, the focus was on improving the training data quality. The primary enhancement was the introduction of noise injection into the expert agent’s control commands to simulate recovery from disturbances. This approach proved effective in teaching the model how to auto-correct when it deviates from the center of the lane.</p>
+
+<h3 id="week-1"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week1">Week 1</a></h3>
+<p>Implemented a data collection tool and collecting sample data, primarily consisting of simple scenarios with straight routes and dynamic obstacles. Simultaneously, a modified model, DeepestLSTMTinyPilotNet, was explored and trained on the collected data.</p>
+
+<h3 id="community-bonding-week-2"><a href="http://127.0.0.1:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/">Community Bonding Week 2</a></h3>
+<p>During the second week of community bonding, the focus was on researching data collection methods for the project.</p>
+
+<h3 id="community-bonding-week-1"><a href="http://127.0.0.1:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/">Community Bonding Week 1</a></h3>
+<p>The week involved setting up the blog website, conducting literature research, and laying the project’s groundwork.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="FinalEvaluation" /><category term="GSoC" /><summary type="html"><![CDATA[A recap of the Summer of Code journey]]></summary></entry><entry><title type="html">Week 17: Sep 18 ~ Sep 24</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week17/" rel="alternate" type="text/html" title="Week 17: Sep 18 ~ Sep 24" /><published>2023-09-25T04:00:00-04:00</published><updated>2023-09-25T04:00:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week17</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week17/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>In the previous week, we successfully introduced support for a new follow-route task in Behavior Metrics. This task requires the agent to follow a sequence of high-level commands, making turns at junctions to reach a destination. However, with this new task comes the need for additional evaluation metrics tailored to its unique requirements. We have decided to incorporate the same evaluation metrics as those <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">previously used during the development of our follow-route agent</a>. These metrics include a route completion ratio, success rate, weighted success rate, counts of various infractions, and an overall driving score that considers route completion and infractions. The challenge now is to integrate these evaluation metrics into Behavior Metrics’ existing workflow.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Update <a href="https://github.com/JdeRobot/BehaviorMetrics/pull/632">PR</a></li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Implement new evaluation metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Create a pull request for the new evaluation metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Produce the final demo video</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Upload models and dataset to Hugging Face</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="workflow">Workflow</h3>
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/behavior_metrics_framework.png" width="800" />
+  </center>
+</figure>
+<p>The image above outlines the current workflow of Behavior Metrics, particularly in the context of the newly added follow-route task:</p>
+<ol>
+  <li>The main program, <code class="language-plaintext highlighter-rouge">driver_carla.py</code>, takes a YAML file containing configurations for the robot and experiments, a <code class="language-plaintext highlighter-rouge">.launch</code> file that initiates the CARLA ROS Bridge, and a test suite file containing all the testing routes.</li>
+  <li>Within the YAML file, multiple models and worlds can be listed for evaluation. For each combination of (world, model, route), the Test Suite Manager is launched to execute a single experiment and record the evaluation metrics.</li>
+  <li>Evaluation metrics are obtained from two sources: (1) data such as odometry and collision information published in the ROS topics by the CARLA ROS Bridge and (2) additional infractions calculated and recorded by the brain, including traffic light infractions and termination causes.</li>
+  <li>These two sources of evaluation metrics are processed and merged to generate the final performance evaluation report.</li>
+</ol>
+
+<h3 id="issues">Issues</h3>
+<p>Several issues need attention in the future:</p>
+<ul>
+  <li>Test Suite Manager almost never exits with code 0, causing repeated attempts.</li>
+  <li>A delay exists between stopping the recording of metrics and stopping the simulation.</li>
+  <li>The newly added evaluation metrics are not plotted in the output image.</li>
+</ul>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="BehaviorMetrics" /><category term="EvaluationMetrics" /><summary type="html"><![CDATA[Expand evaluation metrics in Behavior Metrics]]></summary></entry><entry><title type="html">Week 16: Sep 11 ~ Sep 17</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week16/" rel="alternate" type="text/html" title="Week 16: Sep 11 ~ Sep 17" /><published>2023-09-19T04:30:00-04:00</published><updated>2023-09-19T04:30:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week16</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week16/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
+<p>Starting this week, our primary focus shifts towards the development of Behavior Metrics. Initially, Behavior Metrics only supported the follow-lane task, where the robot circulates around a map without making turns. In this week’s efforts, we continued to implement the new follow-route task in Behavior Metrics. This task allows users to evaluate their models on custom pre-defined routes, each with a specified start and end location and distance. The agent must navigate from the start to the end, following high-level commands for correct turns at junctions.</p>
+
+<h2 id="objectives">Objectives</h2>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Understand the generation of Behavior Metrics’ evaluation metrics</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Implement script mode for the follow-route task</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Implement route loading functionality</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Implement termination mechanism</li>
+</ul>
+
+<h2 id="execution">Execution</h2>
+<h3 id="follow-route-task">Follow-Route Task</h3>
+<figure>
+  <center>
+  <img src="/gsoc2023-Meiqi_Zhao/assets/img/tasks.png" width="800" />
+  </center>
+</figure>
+
+<p>This week’s achievements in Behavior Metrics development include:</p>
+
+<ul>
+  <li>Enabling the loading of a test suite containing various routes, each defined by the map name, start and end location coordinates, and route length.</li>
+  <li>Implementing script mode for running multiple test routes consecutively, recording and outputting evaluation results after each run.</li>
+  <li>Detection and recording of traffic light infractions by calculating the actual vehicle turn angles at each junction and comparing them to the provided high-level turning instructions.</li>
+</ul>
+
+<p>Moreover, we conducted an in-depth exploration of the codebase to comprehend how existing evaluation metrics are generated after each run. In the upcoming week, we plan to complete the implementation of the follow-route task and expand Behavior Metrics to include new evaluation metrics for this task.</p>
+
+<h3 id="demo">Demo</h3>
+<p>In the video below, we demonstrate how script mode is used to run multiple testing episodes sequentially for the follow-route task in Behavior Metrics:</p>
+<center><iframe src="https://drive.google.com/file/d/1ZTnsiZsxKkAO2D6yn042ZptfyWrNhf4b/preview" width="640" height="480" allow="autoplay"></iframe></center>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="BehaviorMetrics" /><category term="EvaluationMetrics" /><summary type="html"><![CDATA[Implement follow-route task in Behavior Metrics]]></summary></entry><entry><title type="html">Week 15: Sep 4 ~ Sep 10</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15/" rel="alternate" type="text/html" title="Week 15: Sep 4 ~ Sep 10" /><published>2023-09-12T03:32:00-04:00</published><updated>2023-09-12T03:32:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week15/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
 <p>This week, we continue to work on model enhancement. Despite expanding our dataset, model performance stayed the same. As a result, we opted for experimenting with different architectures. Interestingly, a deeper PilotNet structure didn’t always translate to better outcomes.</p>
 
 <p>Simultaneously, we worked on expanding Behavior Metrics by introducing user customization for task types and integrating additional evaluation metrics.</p>
@@ -325,117 +474,4 @@ evaluate the model, we developed a mechanism to accumulately calculate the angle
 </ol>
 
 <h2 id="references">References</h2>
-<p>[1] Stephane Ross, Geoffrey J. Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In Conference on Artificial Intelligence and Statistics (AISTATS), 2011.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><category term="Finetuning" /><summary type="html"><![CDATA[Addressing the model's "halting" issue at intersections through specialized data collection and finetuning]]></summary></entry><entry><title type="html">Week 7: July 10 ~ July 16</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7/" rel="alternate" type="text/html" title="Week 7: July 10 ~ July 16" /><published>2023-07-24T04:30:00-04:00</published><updated>2023-07-24T04:30:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week7/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>This week we continue to improve the performance of our model. One major problem we faced this week is the problem of the agent occasionally stopping and getting stuck in a state, which we call the “halting” problem. Understanding and addressing this issue became a central focus, leading us to think about the underlying circumstances and potential solutions. Furthermore, we have also explored the model’s response to traffic lights and conducted cross-town testing to understand generalization.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Complete midterm evaluation</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish training and evaluating v7.0, 7.1</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Confirm whether the model needs a larger amount of data</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Read literature on the halting problem</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Continue reading codebase of Behavior Metrics</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Integrate the existing evaluation metrics into Behavior Metrics</li>
-</ul>
-
-<h2 id="execution">Execution</h2>
-<h3 id="current-models">Current Models</h3>
-<p>Below is a summary of our current models and their performance. As shown in the first table, using one-hot encoding vs an embedding layer for the high level command does not have a big impact on the model in terms of overall performance (<a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">How is driving score calculated?</a>). The second table compares model v7.1 and v7.2, the former ignores the traffic light status and the latter is trained with the traffic light as an additional input to the model. The results show that 
-just by passing the status of the traffic light (Not at traffic light, Red, Green, Yellow) as a one-hot encoding, the model is able to effectively follow the traffic light in testing.</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7.0_vs_v7.1.png" width="500" /></center>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7.1_vs_v7.2.png" width="500" /></center>
-
-<h3 id="testing-in-town01-vs-town02">Testing in Town01 vs Town02</h3>
-<p>So far we have only been training our model in Town01 in CARLA and testing in a different town, Town02. In order to verify whether the model can benefit from a larger amount of data, we tested the model in Town01 vs in Town02. As expected, as shown in the table below, the model performs significantly worse in unseen environmenet. This indicates that if we want to improve the model’s generalization to different environments, we must consider expanding the training data to include various towns, roads, and scenarios. One of the conclusions drawn from this experiment is that a model trained exclusively on Town01 data is overfitting to that particular environment. While it may perform admirably in familiar surroundings, its performance degrades when presented with unseen or novel situations.</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/Town01_vs_Town02.png" width="400" /></center>
-
-<h3 id="the-halting-problem">The “Halting” Problem</h3>
-<p>One of the persistent challenges we encountered this week is what we term the “halting” problem. This issue is characterized by the agent suddenly stopping in the middle of a task, getting stuck in a particular state and unable to continue its course.  To understand this problem more deeply, we began to analyze the specific circumstances under which the halting occurs. We made the following observations:</p>
-
-<ol>
-  <li>Although this issue can surface in a variety of situations, it is most commonly observed when the vehicle is navigating turns at intersections.</li>
-  <li>While the vehicle is immobilized, we noted that the throttle value hovers close to 0.0, whereas the brake value often exceeds 0.9. Interestingly, when the agent perceives another vehicle passing by, it releases the brake and begins to accelerate. However, this short-lived acceleration fails to significantly alter the vehicle’s position, leaving it stagnant once more.</li>
-</ol>
-
-<p>The image below illustrates two typical instances of the “halting” issue, where the vehicle becomes stuck without apparent cause.</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/halting.png" width="800" /></center>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[Exploring model improvements, focusing on the "halting" problem and generalization.]]></summary></entry><entry><title type="html">Week 5: June 26 ~ July 02</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/" rel="alternate" type="text/html" title="Week 5: June 26 ~ July 02" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week5/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>Our current model employs an embedding layer to process the high-level commands, which are then concatenated with the flattened visual features. However, given that we only have four discrete high-level commands, the use of an embedding layer might be overcomplicated for our scenario. Therefore, we plan to experiment with one-hot encoding for these high-level commands this week.</p>
-
-<p>Until now, our model has ignored traffic lights as the expert agent was configured to do so during data collection. However, we believe incorporating traffic light status as an additional input to our model would make our agent more compliant with real-world traffic regulations.</p>
-
-<p>With the approaching midterm evaluation and the significant progress we’ve made so far, we are also considering creating a demo video of our work. We aim to showcase our advancements on our <a href="https://www.youtube.com/@jderobot/videos">Youtube Channel</a>. Moreover, we plan to update our code repository and compose a comprehensive README to provide better guidance for those interested in our project.
-and write a README.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Replace the embedding layer for high-level commands with one-hot encoding</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Introduce traffic light status as an additional input to the model</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Write a README for repository</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Produce a demo video for the JdeRobot Youtube Channel</li>
-</ul>
-
-<h2 id="execution">Execution</h2>
-
-<h3 id="one-hot-encoding-for-high-level-command">One-Hot Encoding for High-Level Command</h3>
-<p>Below is the diagram illustrating the revised model architecture which now processes high-level commands using one-hot encoding. Surprisingly, this adjustment seems to have negatively impacted the model’s performance. The agent now occasionally collides with static objects while executing a turn. This suggests that the agent, using the one-hot encoded commands, hasn’t learned the task of making turns as effectively as it did when the embedding layer was used. This result is counterintuitive, given that one-hot encoding generally presents simpler, more explicit information for the model to learn, thus eliminating the need for the model to learn the weights for an embedding layer.</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v6.3_model architecture.png" width="600" /></center>
-<iframe src="https://drive.google.com/file/d/1U2huVDduwzhtiGYpthJKDAlwDJUTX74g/preview" width="800" height="450" allow="autoplay"></iframe>
-
-<h3 id="transition-to-carla-0914">Transition to CARLA 0.9.14</h3>
-<p>This week, we also initiated the transition from CARLA 0.9.13 to 0.9.14. The main motivations for this change were as follows:</p>
-
-<ul>
-  <li>In CARLA 0.9.14, we can set the target speed of an autopilot agent via the Traffic Manager, thus allowing us to maintain a constant speed for the expert agent.</li>
-  <li>CARLA 0.9.14 allows for differentiation between various types of vehicles through semantic segmentation.</li>
-  <li>In the latest version, we can retrieve the traffic light status for each frame.</li>
-</ul>
-
-<p>However, this transition wasn’t entirely smooth. An issue we ran into was that CARLA updated its semantic segmentation labels in version 0.9.14 to align with the Cityscape dataset. Consequently, our older models, for which data was collected from version 0.9.13, can no longer be used for evaluation moving forward.</p>
-
-<h3 id="traffic-light-status-as-model-input">Traffic Light Status As Model Input</h3>
-<p>The image below illustrates the architecture where we’ve added traffic light status as an additional input modality. The status of the traffic light can take one of four discrete values, encoded using one-hot encoding:</p>
-<ul>
-  <li><strong>0</strong> Not at traffic light</li>
-  <li><strong>1</strong> Red</li>
-  <li><strong>2</strong> Green</li>
-  <li><strong>3</strong> Yellow</li>
-</ul>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v6.4_model architecture.png" width="600" /></center>
-<p>As can be seen in the video below, the model learns to stop at traffic lights. Please note that the video demonstrates successful cases primarily. The overall performance of the model, however, is not yet optimal, as it frequently runs red lights. We will continuously workto improve this aspect and to make our model more accurate in responding to traffic signals.</p>
-<iframe src="https://drive.google.com/file/d/1Bv1x-BFap-OQSNPYq4br505vj7F-7nJG/preview" width="800" height="450" allow="autoplay"></iframe>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[Enhancing agent's traffic light adherence]]></summary></entry><entry><title type="html">Week 6: July 03 ~ July 09</title><link href="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6/" rel="alternate" type="text/html" title="Week 6: July 03 ~ July 09" /><published>2023-07-09T13:07:00-04:00</published><updated>2023-07-09T13:07:00-04:00</updated><id>http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6</id><content type="html" xml:base="http://localhost:4000/gsoc2023-Meiqi_Zhao/blog/2023/week6/"><![CDATA[<h2 id="preliminaries">Preliminaries</h2>
-<p>The main objective for this week is to develop more sophisticated evaluation metrics beyond the existing success rate and average distance traveled before a collision. Specifically, we intend to incorporate metrics from the <a href="https://leaderboard.carla.org/">CARLA Leaderboard</a> into our evaluation process, which take into account route completion and traffic infractions when calculating a score for model performance.</p>
-
-<h2 id="objectives">Objectives</h2>
-<ul class="task-list">
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Finish editing the demo video</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Develop advanced evaluation metrics</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Debug CARLA 0.9.14 segmentation label issue</li>
-  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Study evaluation metrics in Behavior Metrics</li>
-</ul>
-
-<h2 id="execution">Execution</h2>
-<h3 id="current-models">Current models</h3>
-<p>Following the upgrade to CARLA 0.9.14, due to the changes in the semantic segmentation labels, we had to retrain our previous models which were initially trained under CARLA 0.9.13. Below is a summary of the current state of our models (see <a href="/gsoc2023-Meiqi_Zhao/blog/2023/week5">previous post</a> for model architectures):</p>
-<center><img src="/gsoc2023-Meiqi_Zhao/assets/img/v7_models.png" width="400" /></center>
-<p>By comparing v7.0 and v7.1, we aim to discern whether one-hot encoding or an embedding layer leads to superior performance. Furthermore, by comparing v7.1 and v7.2 and specifically observing the number of traffic light infractions, we can evaluate how effectively model v7.2 has learned to adhere to traffic light signals.</p>
-
-<h3 id="evaluation-metrics">Evaluation Metrics</h3>
-<p>Following the scoring system of the CARLA Leaderboard, we have updated our evaluation metrics as follows:</p>
-<ul>
-  <li><strong>Driving Score</strong>: \(R_i P_i\) where \(R_i\) represents the percentage of completion of the \(i\)-th route and \(P_i\) the infraction penalty of the \(i\)−th route.</li>
-  <li><strong>Route Completion</strong>: This metric represents the percentage of the route completed. For each testing route, we pre-calculate the total length of the route by letting an expert agent, i.e., the CARLA autopilot, drive through the route and measure the distance traveled from start to end.</li>
-  <li><strong>Infraction Penalty</strong>: \(\prod_j (p_i ^j)^{\text{# of infractions}_j}\) where \(p^j\) is the penalty of infractions of type \(j\) as specified below:
-    <ul>
-      <li>Collision with walker: <strong>0.5</strong></li>
-      <li>Collision with other vehicle: <strong>0.6</strong></li>
-      <li>Collision with static objects: <strong>0.65</strong></li>
-      <li>Timeout: <strong>0.7</strong></li>
-      <li>Running a red light: <strong>0.7</strong>
-The overall driving score will be the arithmetic mean of the driving scores of all routes.</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="demo-video">Demo Video</h3>
-<p>Finally, we edited and uploaded a demo video for the Youtube channel. Check it out here:</p>
-<iframe width="800" height="450" src="https://www.youtube.com/embed/PsmpY6ZeT4I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Coding" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><summary type="html"><![CDATA[More sophisticated evaluation metrics]]></summary></entry></feed>
+<p>[1] Stephane Ross, Geoffrey J. Gordon, and Drew Bagnell. A reduction of imitation learning and structured prediction to no-regret online learning. In Conference on Artificial Intelligence and Statistics (AISTATS), 2011.</p>]]></content><author><name></name></author><category term="WeeklyUpdates" /><category term="Training" /><category term="Evaluation" /><category term="ImitationLearning" /><category term="Finetuning" /><summary type="html"><![CDATA[Addressing the model's "halting" issue at intersections through specialized data collection and finetuning]]></summary></entry></feed>

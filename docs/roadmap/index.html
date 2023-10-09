@@ -131,6 +131,90 @@
 <h2 id="abstract">Abstract</h2>
 <p>Behavior Metrics[1] is an open-sourced autonomous driving network comparison tool that allows the user to load and test their autonomous driving models in different scenarios and compare the performance metrics against other models. Currently, Behavior Metrics supports the follow-the-line task, where the vehicle must drive along a circuit while maintaining proximity to the center of the lane, and provides multiple trained models for benchmarking. This project aims to expand the current stack by adding support for an obstacle avoidance task in CARLA simulator[2] and providing an end-to-end learning solution for the task. The ultimate goal is a model that enables an ego vehicle to follow the lane while avoiding collision with dynamic objects, such as pedestrians and other vehicles.</p>
 
+<h2 id="project-overview">Project Overview</h2>
+<p>Here’s a concise summary of the key milestones achieved during this GSoC program:</p>
+
+<h3 id="autonomous-driving-agent">Autonomous Driving Agent</h3>
+
+<p>In the initial phase, we successfully trained an autonomous driving agent that exhibited obstacle avoidance skills and could follow a predefined route while responding to high-level turning commands. This agent was built using imitation learning and deep neural networks.</p>
+
+<h3 id="expanding-behavior-metrics">Expanding Behavior Metrics</h3>
+<p>During the latter part of the program, our focus shifted to expanding the capabilities of Behavior Metrics. We introduced support for generating traffic, allowing users to configure scenarios with other vehicles and pedestrians. Additionally, we added a new follow-route task, enabling agents to follow predefined routes involving various turns and junctions.</p>
+
+<h3 id="new-evaluation-metrics">New Evaluation Metrics</h3>
+<p>To accurately evaluate the performance of agents in these new scenarios, we designed and implemented new evaluation metrics. These metrics included route completion ratios, success rates, weighted success rates, and detailed infraction tracking, providing a comprehensive assessment of agent performance.</p>
+
+<h3 id="pull-requests">Pull Requests</h3>
+<ul>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/606" rel="external nofollow noopener" target="_blank">#606</a> new launch file for Town01 with a stopped car</li>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/620" rel="external nofollow noopener" target="_blank">#620</a> added on npc vehicle with ad agent</li>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/626" rel="external nofollow noopener" target="_blank">#626</a> generate traffic</li>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/627" rel="external nofollow noopener" target="_blank">#627</a> Update instructions on installing carla-birdeye-view</li>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/632" rel="external nofollow noopener" target="_blank">#632</a> Added segmentation based imitation learning model as a new brain</li>
+  <li>
+<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/643" rel="external nofollow noopener" target="_blank">#643</a> Add support for a new follow-route task and evaluation metrics</li>
+</ul>
+
+<h2 id="weekly-progress">Weekly Progress</h2>
+<h3 id="week-17"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week17">Week 17</a></h3>
+<p>In Week 17, the main focus was on expanding the evaluation metrics in Behavior Metrics to accommodate the new “follow-route” task.</p>
+
+<h3 id="week-16"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week16">Week 16</a></h3>
+<p>In Week 16, the primary focus was on developing Behavior Metrics. Specifically, the team worked on implementing the new “follow-route” task in Behavior Metrics.</p>
+
+<h3 id="week-15"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week15">Week 15</a></h3>
+<p>During Week 15, the focus was on improving model performance by experimenting with different architectures. Simultaneously, work continued on expanding Behavior Metrics by introducing user customization for different task types and integrating additional evaluation metrics.</p>
+
+<h3 id="week-14"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week14">Week 14</a></h3>
+<p>During Week 14, the primary focus was on integrating the current model into Behavior Metrics to complete the project pipeline. The model was successfully added as a new brain in Behavior Metrics, enabling its use within the platform.</p>
+
+<h3 id="week-12--13"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week12">Week 12 &amp; 13</a></h3>
+<p>During Weeks 12 and 13, there was a focus on improving the model’s obstacle avoidance capabilities.</p>
+
+<h3 id="week-11"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week11">Week 11</a></h3>
+<p>In Week 11, efforts to enhance the model’s performance, particularly in obstacle avoidance, continued. Additionally, progress was made in integrating traffic generation functionality into the Behavior Metrics platform.</p>
+
+<h3 id="week-10"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week10">Week 10</a></h3>
+<p>In Week 10, the focus shifted towards refining and evaluating the model’s performance. Efforts also began to integrate the model into the Behavior Metrics platform, expanding its capabilities to include traffic.</p>
+
+<h3 id="week-9"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week9">Week 9</a></h3>
+<p>In Week 9, we implemented Data Aggregation (DAgger) to iteratively enhance the model’s behavior and refined the evaluation metrics to detect whether the model correctly follows turning instructions.</p>
+
+<h3 id="week-8"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week8">Week 8</a></h3>
+<p>In Week 8, we continued to address the “halting” problem encountered in the model, particularly when making turns at intersections. The team explored various strategies to optimize data collection, including data trimming and prioritization.</p>
+
+<h3 id="week-7"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week7">Week 7</a></h3>
+<p>In Week 7, the focus was on enhancing the model’s performance, particularly addressing the “halting” problem where the agent occasionally stops and gets stuck during navigation.</p>
+
+<h3 id="week-6"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week6">Week 6</a></h3>
+<p>In Week 6, the main focus was on enhancing the evaluation process by incorporating more sophisticated metrics inspired by the CARLA Leaderboard.</p>
+
+<h3 id="week-5"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week5">Week 5</a></h3>
+<p>In Week 5, the primary focus was on refining the model’s adherence to traffic lights by incorporating traffic light status as an additional input and experimenting with one-hot encoding for high-level commands.</p>
+
+<h3 id="week-4"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week4">Week 4</a></h3>
+<p>This week, efforts were focused on enhancing the model’s ability to make turns at intersections in any direction by incorporating high-level commands. Data collection was adjusted to record these commands, and the model architecture was updated to accommodate them.</p>
+
+<h3 id="week-3"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week3">Week 3</a></h3>
+<p>This week, the focus was on improving the versatility of the lane-following model by enabling it to navigate routes with turns and intersections.</p>
+
+<h3 id="week-2"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week2">Week 2</a></h3>
+<p>In the second week of coding, the focus was on improving the training data quality. The primary enhancement was the introduction of noise injection into the expert agent’s control commands to simulate recovery from disturbances. This approach proved effective in teaching the model how to auto-correct when it deviates from the center of the lane.</p>
+
+<h3 id="week-1"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week1">Week 1</a></h3>
+<p>Implemented a data collection tool and collecting sample data, primarily consisting of simple scenarios with straight routes and dynamic obstacles. Simultaneously, a modified model, DeepestLSTMTinyPilotNet, was explored and trained on the collected data.</p>
+
+<h3 id="community-bonding-week-2"><a href="http://127.0.0.1:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-2/" rel="external nofollow noopener" target="_blank">Community Bonding Week 2</a></h3>
+<p>During the second week of community bonding, the focus was on researching data collection methods for the project.</p>
+
+<h3 id="community-bonding-week-1"><a href="http://127.0.0.1:4000/gsoc2023-Meiqi_Zhao/blog/2023/community-bonding-week-1/" rel="external nofollow noopener" target="_blank">Community Bonding Week 1</a></h3>
+<p>The week involved setting up the blog website, conducting literature research, and laying the project’s groundwork.</p>
+
 <h2 id="references">References</h2>
 <p>[1] <a href="https://github.com/JdeRobot/BehaviorMetrics" rel="external nofollow noopener" target="_blank">https://github.com/JdeRobot/BehaviorMetrics</a></p>
 
