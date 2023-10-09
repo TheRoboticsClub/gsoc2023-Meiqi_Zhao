@@ -129,7 +129,7 @@
             <h1 id="obstacle-avoidance-for-autonomous-driving-in-carla-using-segmentation-deep-learning-models">Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models</h1>
 
 <h2 id="abstract">Abstract</h2>
-<p>Behavior Metrics[1] is an open-sourced autonomous driving network comparison tool that allows the user to load and test their autonomous driving models in different scenarios and compare the performance metrics against other models. Currently, Behavior Metrics supports the follow-the-line task, where the vehicle must drive along a circuit while maintaining proximity to the center of the lane, and provides multiple trained models for benchmarking. This project aims to expand the current stack by adding support for an obstacle avoidance task in CARLA simulator[2] and providing an end-to-end learning solution for the task. The ultimate goal is a model that enables an ego vehicle to follow the lane while avoiding collision with dynamic objects, such as pedestrians and other vehicles.</p>
+<p>Behavior Metrics[1] is an open-sourced autonomous driving network comparison tool that allows the user to load and test their autonomous driving models in different scenarios and compare the performance metrics against other models. Currently, Behavior Metrics only supports the follow-the-line task, where the vehicle must drive along a circuit while maintaining proximity to the center of the lane, and provides multiple trained models for benchmarking. This project aims to expand the current stack by adding support for a route navigation task where the agent follows a sequence of high-level commands to reach a destination while avoiding obstacles in CARLA simulator[2], as well as providing an end-to-end learning solution for the task. The ultimate goal is a model that enables an ego vehicle to follow the route while avoiding collision with dynamic objects, such as pedestrians and other vehicles, and comprehensive evaluation metrics for the new task.</p>
 
 <h2 id="project-overview">Project Overview</h2>
 <p>Here’s a concise summary of the key milestones achieved during this GSoC program:</p>
@@ -143,22 +143,6 @@
 
 <h3 id="new-evaluation-metrics">New Evaluation Metrics</h3>
 <p>To accurately evaluate the performance of agents in these new scenarios, we designed and implemented new evaluation metrics. These metrics included route completion ratios, success rates, weighted success rates, and detailed infraction tracking, providing a comprehensive assessment of agent performance.</p>
-
-<h3 id="pull-requests">Pull Requests</h3>
-<ul>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/606" rel="external nofollow noopener" target="_blank">#606</a> new launch file for Town01 with a stopped car</li>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/620" rel="external nofollow noopener" target="_blank">#620</a> added on npc vehicle with ad agent</li>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/626" rel="external nofollow noopener" target="_blank">#626</a> generate traffic</li>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/627" rel="external nofollow noopener" target="_blank">#627</a> Update instructions on installing carla-birdeye-view</li>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/632" rel="external nofollow noopener" target="_blank">#632</a> Added segmentation based imitation learning model as a new brain</li>
-  <li>
-<a href="https://github.com/JdeRobot/BehaviorMetrics/pull/643" rel="external nofollow noopener" target="_blank">#643</a> Add support for a new follow-route task and evaluation metrics</li>
-</ul>
 
 <h2 id="weekly-progress">Weekly Progress</h2>
 <h3 id="week-17"><a href="/gsoc2023-Meiqi_Zhao/blog/2023/week17">Week 17</a></h3>
