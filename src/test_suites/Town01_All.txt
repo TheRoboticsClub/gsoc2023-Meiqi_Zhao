@@ -1,0 +1,20 @@
+80 68 446 Left Right
+72 85 431 Left Right
+102 217 292 Straight Left
+216 229 265 Right Straight
+102 17 148 Right Left
+14 229 139 Right Left
+123 200 423 Straight Left
+249 0 251 Right Straight
+209 250 257 Straight Left
+95 62 383 Left Right
+66 13 340 Left Right
+158 227 432 Right Left
+116 99 299 Straight Right Straight
+100 204 336 Straight Left Straight
+83 247 276 Straight Right
+137 241 495 Left Left
+242 76 473 Right Right
+223 110 345 Straight Right
+111 224 388 Left Straight
+130 32 381 Straight

@@ -33,31 +33,37 @@ class ShiftAndAdjustSteer:
 
 
 class FilterClassesTransform:
-    def __init__(self, classes_to_keep = [4, 6, 7, 10], mode='both'):
+    def __init__(self, classes_to_keep = [1, 7, 12, 13, 14, 15, 16, 17, 18, 19, 24], mode='both'):
         self.classes = {
-            0: [0, 0, 0],         # Unlabeled
-            1: [70, 70, 70],      # Buildings
-            2: [100, 40, 40],     # Fences
-            3: [55, 90, 80],      # Other
-            4: [220, 20, 60],     # Pedestrians
-            5: [153, 153, 153],   # Poles
-            6: [157, 234, 50],    # RoadLines
-            7: [128, 64, 128],    # Roads
-            8: [244, 35, 232],    # Sidewalks
-            9: [107, 142, 35],    # Vegetation
-            10: [0, 0, 142],      # Vehicles
-            11: [102, 102, 156],  # Walls
-            12: [220, 220, 0],    # TrafficSigns
-            13: [70, 130, 180],   # Sky
-            14: [81, 0, 81],      # Ground
-            15: [150, 100, 100],  # Bridge
-            16: [230, 150, 140],  # RailTrack
-            17: [180, 165, 180],  # GuardRail
-            18: [250, 170, 30],   # TrafficLight
-            19: [110, 190, 160],  # Static
-            20: [170, 120, 50],   # Dynamic
-            21: [45, 60, 150],    # Water
-            22: [145, 170, 100],  # Terrain
+            0: [0, 0, 0],         # Unlabeled  
+            1: [128,  64, 128],   # Road ***
+            2: [244,  35, 232],   # Sidewalk
+            3: [70,  70,  70],    # Building
+            4: [102, 102, 156],   # Wall
+            5: [190, 153, 153],   # Fence
+            6: [153, 153, 153],   # Pole
+            7: [250, 170,  30],   # Traffic Light ***
+            8: [220, 220,   0],   # Traffic Sign
+            9: [107, 142,  35],   # Vegetation
+            10: [152, 251, 152],  # Terrain
+            11: [70, 130, 180],   # Sky
+            12: [220,  20,  60],  # Pedestrain ***
+            13: [255,   0,   0],  # Rider ***
+            14: [0,   0, 142],    # Car ***
+            15: [0,   0,  70],    # Truck ***
+            16: [0,  60, 100],    # Bus ***
+            17: [0,  80, 100],    # Train ***
+            18: [0,   0, 230],    # Motorcycle ***
+            19: [119,  11,  32],  # Bicycle ***
+            20: [110, 190, 160],  # Static
+            21: [170, 120,  50],  # Dynamic
+            22: [55,  90,  80],   # Other
+            23: [45,  60, 150],   # Water
+            24: [157, 234,  50],  # Road Line ***
+            25: [81,   0,  81],   # Ground
+            26: [150, 100, 100],  # Bridge
+            27: [230, 150, 140],  # Rail Track
+            28: [180, 165, 180]   # Guard Rail
         }
         self.classes_to_keep = classes_to_keep
         self.mode = mode

@@ -6,7 +6,7 @@ import h5py
 import torch.nn.functional as F
 
 class CARLADataset(Dataset):
-    def __init__(self, directory, transform=None, hlc_one_hot=True):
+    def __init__(self, directory, transform=None, one_hot=True, combined_control=False):
         """
         Args:
             directory (string): Directory with all the hdf5 files containing the episode data.
@@ -27,7 +27,8 @@ class CARLADataset(Dataset):
             self.lengths.append(length)
             self.total_length += length
         
-        self.hlc_one_hot = hlc_one_hot
+        self.one_hot = one_hot
+        self.combined_control = combined_control
 
     def __len__(self):
         return self.total_length
@@ -48,10 +49,13 @@ class CARLADataset(Dataset):
 
         # create a dictionary for the data sample
         hlc = torch.tensor(file['hlc'][idx][0], dtype=torch.long)
-        if self.hlc_one_hot:
+        light = torch.tensor(file['light'][idx][0], dtype=torch.long)
+        if self.one_hot:
             hlc = F.one_hot(hlc.to(torch.int64), num_classes=4)
+            light = F.one_hot(light.to(torch.int64), num_classes=4)
         sample = {
             'hlc': hlc,
+            'light': light,
             'controls': file['controls'][idx],
             'measurements': torch.tensor(file['measurements'][idx][0], dtype=torch.float32),
             'rgb': torch.tensor(file['rgb'][idx], dtype=torch.float32).permute(2, 0, 1),
@@ -66,14 +70,17 @@ class CARLADataset(Dataset):
         segmentation = sample['segmentation'] / 255.0
         img = torch.cat((rgb, segmentation), dim=0)
 
-        # normalize speed measurement
-        sample['measurements'] /= 90.0
-        
+        # normalize and clip speed measurement
+        sample['measurements'] = torch.clamp(sample['measurements'] / 40.0, 0, 1.0).to(torch.float32)
+
         # convert steer from [-1, 1] to [0, 1]
         controls = sample['controls']
-        controls = torch.tensor([controls[0], (controls[1]+ 1.0) / 2.0, controls[2]], dtype=torch.float32)
+        if not self.combined_control:
+            controls = torch.tensor([controls[0], (controls[1]+ 1.0) / 2.0, controls[2]], dtype=torch.float32)
+        else: # combine throttle and brake
+            controls = torch.tensor([(controls[0] - controls[2] + 1.0) / 2.0, (controls[1]+ 1.0) / 2.0], dtype=torch.float32)
         
-        return img, sample['measurements'], sample['hlc'], controls
+        return img, sample['measurements'], sample['hlc'], sample['light'], controls
 
     def close(self):
         for file in self.files:

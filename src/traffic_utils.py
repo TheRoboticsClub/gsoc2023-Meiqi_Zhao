@@ -82,7 +82,7 @@ def spawn_vehicles(world, client, n_vehicles, traffic_manager):
             vehicles_list.append(response.actor_id)
     return vehicles_list
 
-def spawn_pedestrians(world, client, n_pedestrians, percentagePedestriansRunning=0.0, percentagePedestriansCrossing=0.0):
+def spawn_pedestrians(world, client, n_pedestrians, percentagePedestriansRunning=0.0, percentagePedestriansCrossing=1.0):
     walkers_list = []
     all_id = []
 
@@ -96,8 +96,8 @@ def spawn_pedestrians(world, client, n_pedestrians, percentagePedestriansRunning
     for spawn_point in spawn_points:
         walker_bp = random.choice(blueprintsWalkers)
         # set as not invincible
-        if walker_bp.has_attribute('is_invincible'):
-            walker_bp.set_attribute('is_invincible', 'false')
+        #if walker_bp.has_attribute('is_invincible'):
+        walker_bp.set_attribute('is_invincible', 'false')
         # set the max speed
         if walker_bp.has_attribute('speed'):
             if (random.random() > percentagePedestriansRunning):
@@ -151,3 +151,27 @@ def spawn_pedestrians(world, client, n_pedestrians, percentagePedestriansRunning
         all_actors[i].set_max_speed(float(walker_speed[int(i/2)]))
     
     return all_id, all_actors, walkers_list
+
+def get_traffic_light_status(vehicle):
+    light_status = -1
+    if vehicle.is_at_traffic_light():
+        traffic_light = vehicle.get_traffic_light()
+        light_status = traffic_light.get_state()
+    return light_status
+
+def cleanup(vehicles_list, pedestrians_list, all_id, all_actors, vehicle, sensors, client):
+    # destroy ego vehicle
+    vehicle.destroy()
+
+    # destroy sensors
+    for sensor in sensors: sensor.destroy()
+    
+    # destroy vehicles
+    logging.info('destroying %d vehicles' % len(vehicles_list))
+    client.apply_batch([carla.command.DestroyActor(x) for x in vehicles_list])
+
+    # destroy walkers
+    logging.info('destroying %d walkers' % len(pedestrians_list))
+    for i in range(0, len(all_id), 2):
+        all_actors[i].stop()
+    client.apply_batch([carla.command.DestroyActor(x) for x in all_id])

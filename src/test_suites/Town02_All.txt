@@ -1,0 +1,12 @@
+24 79 158 Right Right
+77 1 166 Left Left
+32 75 174 Right Straight
+76 33 193 Straight Left
+52 59 148 Left Right
+69 51 136 Left Right
+40 69 272 Straight Left
+59 39 245 Right Straight
+60 25 255 Straight Right
+23 61 269 Left Straight
+82 17 155 Right Left
+18 83 140 Right Left
