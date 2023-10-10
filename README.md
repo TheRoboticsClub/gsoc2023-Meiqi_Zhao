@@ -4,7 +4,20 @@
 
 ![model architecture](assets/new_architecture.png "model architecture")
 
+## Prerequisites
+* CARLA 0.9.14
+* `pip install -r requirements.txt `
+
+Note that you may need to set up your Python path to point to CARLA:
+```
+export CARLA_ROOT=<PATH-TO-CARLA>
+export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla
+export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/agents
+export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/dist/carla-0.9.14-py3.7-linux-x86_64.egg
+```
+
 ## Usage
+
 ### Data collector
 To run the data collector: 
 1. Run `CarlaUE4.sh` in your CARLA installation path
@@ -19,7 +32,7 @@ Follow the instructions in `ModifiedDeepestLSTMTinyPilotNet/train.ipynb`.
 
 ### Testing
 
- 1. Run `CarlaUE4.sh -renderOffScreen` in your CARLA installation path
+1. Run `CarlaUE4.sh -renderOffScreen` in your CARLA installation path
 2. Run `python evaluate_model.py --episode_file <TEST_EPISODE_FILE> --model <MODEL_FILE> --n_episodes <NUMBER OF EPISODES>`
  
  A pygame window should pop up and testing automatically starts. At the end of testing, the following metrics will be reported
