@@ -98,11 +98,3 @@ def read_routes(filename):
     routes = [((int(line.split()[0]), int(line.split()[1])), int(line.split()[2]), line.split()[3:]) for line in lines]
     return routes
 
-def calculate_delta_yaw(prev_yaw, cur_yaw):
-    delta_yaw = cur_yaw - prev_yaw
-    if delta_yaw > 180:
-        delta_yaw -= 360
-    elif delta_yaw < -180:
-        delta_yaw += 360
-    return delta_yaw
-

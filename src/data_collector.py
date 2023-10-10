@@ -5,10 +5,10 @@ import carla
 import numpy as np
 import h5py
 
-from traffic_utils import spawn_vehicles, spawn_pedestrians, get_traffic_light_status, cleanup
+from utils.traffic import spawn_vehicles, spawn_pedestrians, get_traffic_light_status, cleanup
 from agent import NoisyTrafficManagerAgent
 from sensors import RGBCamera, SegmentationCamera, setup_collision_sensor
-from utils import (carla_seg_to_array, carla_rgb_to_array, road_option_to_int,
+from utils.preprocess import (carla_seg_to_array, carla_rgb_to_array, road_option_to_int,
                    read_routes, traffic_light_to_int)
 
 has_collision = False

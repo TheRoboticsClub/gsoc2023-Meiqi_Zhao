@@ -1,0 +1,4 @@
+77 1 166 Left Left
+52 59 148 Left Right
+69 51 136 Left Right
+23 61 269 Left Straight

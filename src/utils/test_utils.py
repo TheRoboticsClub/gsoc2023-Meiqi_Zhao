@@ -144,6 +144,14 @@ def calculate_distance(location_1, location_2):
     dy = location_1.y - location_2.y
     return np.sqrt(dx*dx + dy*dy)
 
+def calculate_delta_yaw(prev_yaw, cur_yaw):
+    delta_yaw = cur_yaw - prev_yaw
+    if delta_yaw > 180:
+        delta_yaw -= 360
+    elif delta_yaw < -180:
+        delta_yaw += 360
+    return delta_yaw
+
 class DistanceTracker:
     def __init__(self):
         self.prev_location = None
@@ -158,21 +166,3 @@ class DistanceTracker:
 
     def get_total_distance(self):
         return self.total_distance
-
-
-def calculate_stats(distances, success_record):
-    assert len(distances) == len(success_record), "Mismatch between lengths of distances and success_record arrays"
-    
-    num_episodes = len(success_record)
-    
-    # success rate
-    success_rate = sum(success_record) / num_episodes
-    
-    # sccess rate weighted by track length
-    weighted_success_rate = sum([dist * success for dist, success in zip(distances, success_record)]) / sum(distances)
-    
-    # Average distance traveled for failed episodes only
-    fail_distances = [dist for dist, success in zip(distances, success_record) if success == 0]
-    average_fail_distance = sum(fail_distances) / len(fail_distances) if fail_distances else 0
-    
-    return success_rate, weighted_success_rate, average_fail_distance
