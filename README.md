@@ -1,11 +1,12 @@
 # Obstacle Avoidance for Autonomous Driving in CARLA Using Segmentation Deep Learning Models
+[Project Website](https://theroboticsclub.github.io/gsoc2023-Meiqi_Zhao/) | [Demo Video](https://www.youtube.com/watch?v=yfScvcrjYkg)
 
 ## Model Architecture
 
 ![model architecture](assets/new_architecture.png "model architecture")
 
 ## Prerequisites
-* CARLA 0.9.14
+* [CARLA Simulator 0.9.14](https://carla.org/2022/12/23/release-0.9.14/)
 * `pip install -r requirements.txt `
 
 Note that you may need to set up your Python path to point to CARLA:
@@ -42,3 +43,4 @@ Follow the instructions in `ModifiedDeepestLSTMTinyPilotNet/train.ipynb`.
 
 Example usage:
 `python evaluate_model.py --episode_file test_suites/Town02_All.txt --model "ModifiedDeepestLSTMTinyPilotNet/models/v10.0.pth" --n_episodes 100 --combined_control` will test the `v10.0` model in Town02 for 100 randomly sampled episodes from `Town02_All.txt`.
+
