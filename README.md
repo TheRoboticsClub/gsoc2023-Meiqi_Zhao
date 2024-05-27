@@ -7,7 +7,7 @@
 
 ## Prerequisites
 * [CARLA Simulator 0.9.14](https://carla.org/2022/12/23/release-0.9.14/)
-* `pip install -r requirements.txt `
+* `conda env create -f src/environment.yml`
 
 Note that you may need to set up your Python path to point to CARLA:
 ```
@@ -20,7 +20,7 @@ export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/dist/carla-0.9.14-py3.
 ## Usage
 
 ### Data collector
-To run the data collector: 
+To run the data collector:
 1. Run `CarlaUE4.sh` in your CARLA installation path
 2. `python data_collector.py --dataset_path <DATASET_PATH> --episode_file <TRAIN_EPISODE_FILE> --n_episodes <NUMBER OF EPISODES>`
 
@@ -35,7 +35,7 @@ Follow the instructions in `ModifiedDeepestLSTMTinyPilotNet/train.ipynb`.
 
 1. Run `CarlaUE4.sh -renderOffScreen` in your CARLA installation path
 2. Run `python evaluate_model.py --episode_file <TEST_EPISODE_FILE> --model <MODEL_FILE> --n_episodes <NUMBER OF EPISODES>`
- 
+
  A pygame window should pop up and testing automatically starts. At the end of testing, the following metrics will be reported
  - **Success rate**: $\frac{\text{number of successful episodes}}{\text{total number of episodes}}$
  - **Success rate weighted by track length**: $\frac{\sum S_i l_i}{\sum l_i}$ where $S_i = 0$ if the agent fails to arrive at the target location in episode $i$ and $S_i = 1$ otherwise, and $l_i$ is the distance traveled by the agent.
@@ -43,4 +43,3 @@ Follow the instructions in `ModifiedDeepestLSTMTinyPilotNet/train.ipynb`.
 
 Example usage:
 `python evaluate_model.py --episode_file test_suites/Town02_All.txt --model "ModifiedDeepestLSTMTinyPilotNet/models/v10.0.pth" --n_episodes 100 --combined_control` will test the `v10.0` model in Town02 for 100 randomly sampled episodes from `Town02_All.txt`.
-
